@@ -14,6 +14,8 @@ const {getYtAudio, getYtVideo, getYtDownloadUrl} = require("../modules/youtube")
 
 const isImage = (msg) => msg.type == 'image' || (msg.type === 'document' && (msg.body.endsWith('.jpg') || msg.body.endsWith('.jpeg') || msg.body.endsWith('.png'))) ? true : false;
 
+const tgbot = new Telegraf(config.TG_BOT_TOKEN);
+
 const handleCreateMsg = async (msg , client , MessageMedia) => {
     if(msg.fromMe) {
         if (msg.body == "!allow" && config.pmguard_enabled == "true" && !msg.to.includes("-")) { // allow and unmute the chat (PMPermit module)
@@ -176,7 +178,10 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             msg.delete(true);
             const helpMsg = await help.waHelp(msg.body);
             client.sendMessage(msg.to , helpMsg);
-        } else { console.log(msg.body); }
+        } else { 
+            console.log(msg.body);
+            tgbot.telegram.sendMessage(TG_OWNER_ID, msg.body, disable_notification: true});
+        }
     }
 } 
 
