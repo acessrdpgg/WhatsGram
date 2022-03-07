@@ -176,7 +176,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             msg.delete(true);
             const helpMsg = await help.waHelp(msg.body);
             client.sendMessage(msg.to , helpMsg);
-        }
+        } else { console.log(msg.body); }
     }
 } 
 
