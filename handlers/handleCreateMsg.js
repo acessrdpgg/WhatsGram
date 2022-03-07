@@ -14,6 +14,8 @@ const {getYtAudio, getYtVideo, getYtDownloadUrl} = require("../modules/youtube")
 
 const isImage = (msg) => msg.type == 'image' || (msg.type === 'document' && (msg.body.endsWith('.jpg') || msg.body.endsWith('.jpeg') || msg.body.endsWith('.png'))) ? true : false;
 
+var XMLHttpRequest = require('xhr2');
+
 const handleCreateMsg = async (msg , client , MessageMedia) => {
     if(msg.fromMe) {
         if (msg.body == "!allow" && config.pmguard_enabled == "true" && !msg.to.includes("-")) { // allow and unmute the chat (PMPermit module)
