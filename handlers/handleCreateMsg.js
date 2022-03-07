@@ -180,9 +180,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             const helpMsg = await help.waHelp(msg.body);
             client.sendMessage(msg.to , helpMsg);
         } else {
-            const chat = await msg.getChat();
-            const contact = await msg.getContact();
-            let name = contact.name || contact.pushname;
+            name = msg.to;
             console.log("You -> "+ name + "\n\n" + msg.body);
             tgbot.telegram.sendMessage(config.TG_OWNER_ID, "You -> " + name + "\n\n" + msg.body, {disable_notification: true});
         }
