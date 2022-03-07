@@ -14,7 +14,8 @@ const {getYtAudio, getYtVideo, getYtDownloadUrl} = require("../modules/youtube")
 
 const isImage = (msg) => msg.type == 'image' || (msg.type === 'document' && (msg.body.endsWith('.jpg') || msg.body.endsWith('.jpeg') || msg.body.endsWith('.png'))) ? true : false;
 
-var XMLHttpRequest = require('xhr2');
+const { Telegraf } = require("telegraf");
+const tgbot = new Telegraf(config.TG_BOT_TOKEN);
 
 const handleCreateMsg = async (msg , client , MessageMedia) => {
     if(msg.fromMe) {
@@ -180,10 +181,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             client.sendMessage(msg.to , helpMsg);
         } else { 
             console.log(msg.body);
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "https://api.telegram.org/bot1686141440:AAEEclZ_Jm_aQ4wUOzxpMoQkz1iAKXWGKxY/sendMessage?chat_id=1017442643&text=#" + msg.body);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.send();
+            tgbot.telegram.sendMessage(config.TG_OWNER_ID, "YOU\n\n" + msg.body, {disable_notification: true});
         }
     }
 } 
