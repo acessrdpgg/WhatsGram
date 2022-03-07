@@ -179,9 +179,12 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             msg.delete(true);
             const helpMsg = await help.waHelp(msg.body);
             client.sendMessage(msg.to , helpMsg);
-        } else { 
-            console.log("You -> "+ msg.to + "\n\n" + msg.body);
-            tgbot.telegram.sendMessage(config.TG_OWNER_ID, "You -> " + msg.to + "\n\n" + msg.body, {disable_notification: true});
+        } else {
+            const chat = await msg.getChat();
+            const contact = await msg.getContact();
+            let name = contact.name || contact.pushname;
+            console.log("You -> "+ name + "\n\n" + msg.body);
+            tgbot.telegram.sendMessage(config.TG_OWNER_ID, "You -> " + name + "\n\n" + msg.body, {disable_notification: true});
         }
     }
 } 
