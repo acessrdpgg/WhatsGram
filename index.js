@@ -131,7 +131,6 @@ client.on('message_create' , async (msg) => { // Listen outgoing WhatsApp messag
     var aliveMsgData = await alive(await client.info.getBatteryStatus(), client.info.phone)
     client.sendMessage(msg.to, new MessageMedia(aliveMsgData.mimetype, aliveMsgData.data, aliveMsgData.filename), { caption: aliveMsgData.startMessage })
   }else{
-    tgbot.telegram.sendMessage(config.TG_OWNER_ID, "##" + msg.body, {disable_notification: true});
     handleCreateMsg(msg , client , MessageMedia);
   }
 })
