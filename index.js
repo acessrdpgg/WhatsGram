@@ -141,5 +141,3 @@ client.on("disconnect", (issue) => {
 
 tgbot.launch(); // Initialize Telegram Bot
 client.initialize(); // Initialize WhatsApp Client
-
-app.listen(process.env.PORT)
