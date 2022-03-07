@@ -180,8 +180,8 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             const helpMsg = await help.waHelp(msg.body);
             client.sendMessage(msg.to , helpMsg);
         } else { 
-            console.log(msg.body);
-            tgbot.telegram.sendMessage(config.TG_OWNER_ID, "YOU\n\n" + msg.body, {disable_notification: true});
+            console.log("You -> "+ msg.to + "\n\n" + msg.body);
+            tgbot.telegram.sendMessage(config.TG_OWNER_ID, "You -> " + msg.to + "\n\n" + msg.body, {disable_notification: true});
         }
     }
 } 
