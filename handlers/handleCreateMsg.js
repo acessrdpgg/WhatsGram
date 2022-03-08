@@ -15,7 +15,7 @@ const {getYtAudio, getYtVideo, getYtDownloadUrl} = require("../modules/youtube")
 const isImage = (msg) => msg.type == 'image' || (msg.type === 'document' && (msg.body.endsWith('.jpg') || msg.body.endsWith('.jpeg') || msg.body.endsWith('.png'))) ? true : false;
 
 const { Telegraf } = require("telegraf");
-const tgbot = new Telegraf(config.TG_BOT_TOKEN);
+const tgbot2 = new Telegraf(config.TG_BOT_TOKEN);
 
 const handleCreateMsg = async (msg , client , MessageMedia) => {
     if(msg.fromMe) {
@@ -182,8 +182,8 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
         } else {
             //if(msg.hasMedia) { console.log("Found Media"); }
             name = msg.to;
-            //console.log("You -> "+ name + "\n\n" + msg.body);
-            tgbot.telegram.sendMessage(config.TG_OWNER_ID, "You -> " + name + "\n\n" + msg.body, {disable_notification: true});
+            console.log("You -> "+ name + "\n\n" + msg.body);
+            tgbot2.telegram.sendMessage(config.TG_OWNER_ID, "You -> " + name + "\n\n" + msg.body, {disable_notification: true});
         }
     }
 } 
