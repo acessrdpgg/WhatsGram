@@ -151,7 +151,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
         else if(msg.body.startsWith('!spam')) {
             console.log("SPAM: "+msg.body);
             msg.delete(true);
-            client.sendMessage(msg.to, msg.body);
+            client.sendMessage(msg.to, msg.body.replace('!spam', ''));
         }
         else if(msg.body.startsWith('!yta')){
             msg.delete(true);
