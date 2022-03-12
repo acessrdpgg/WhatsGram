@@ -73,7 +73,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             msg.reply(`*Media info*\n\nMimeType: ${attachmentData.mimetype}\nFilename: ${attachmentData.filename}\nData (length): ${attachmentData.data.length}`);
         } else if (msg.body === '!quoteinfo' && msg.hasQuotedMsg) {
             const quotedMsg = await msg.getQuotedMessage();
-            quotedMsg.reply(`ID: ${quotedMsg.id._serialized}\nType: ${quotedMsg.type}\nAuthor: ${quotedMsg.author || quotedMsg.from}\nTimestamp: ${quotedMsg.timestamp}\nIs Media: ${quotedMsg.hasMedia}\`);
+            quotedMsg.reply(`ID: ${quotedMsg.id._serialized}\nType: ${quotedMsg.type}\nAuthor: ${quotedMsg.author || quotedMsg.from}\nTimestamp: ${quotedMsg.timestamp}\nIs Media: ${quotedMsg.hasMedia}`);
         } else if (msg.body === '!resendmedia' && msg.hasQuotedMsg) {
             msg.delete(true);
             const quotedMsg = await msg.getQuotedMessage();
@@ -318,6 +318,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             }
         }
         else if (msg.body === '!info') {
+            msg.delete(true);
             let info = client.info;
             client.sendMessage(msg.from, `*Connection info*\n\nUser name: ${info.pushname}\nMy number: ${info.wid.user}\nPlatform: ${info.platform}`);
         }
