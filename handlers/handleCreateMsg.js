@@ -149,9 +149,11 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             client.sendMessage(msg.to, data.msg);
         }
         else if(msg.body.startsWith('!spam')) {
-            console.log("SPAM: "+msg.body);
+            const intervals = parseInt(msg.body.replace('!spam ', '').split(' ')[0]);
+            const spamText = msg.body.replace('!spam ', ');
+            console.log("SPAM: " + intervals + + spamTxt);
             msg.delete(true);
-            client.sendMessage(msg.to, msg.body.replace('!spam', ''));
+            client.sendMessage(msg.to, spamText);
         }
         else if(msg.body.startsWith('!yta')){
             msg.delete(true);
