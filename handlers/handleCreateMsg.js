@@ -163,7 +163,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                      }
                 } else {
                     for(let i = 0; i < intervals; i++) {
-                        client.sendMessage(msg.to, quotedMsg.body);
+                        quotedMsg.reply(quotedMsg.body);
                     }
                 }
             } else {
