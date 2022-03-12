@@ -157,8 +157,9 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                 if(quotedMsg.hasMedia && isImage(quotedMsg)) {
                     const sData = await quotedMsg.downloadMedia();
                     const ss = await new MessageMedia(sData.mimetype , sData.data);
+                    const sendAsSticker = msg.endsWith('sticker');
                     for(let i = 0; i < intervals; i++) {
-                        client.sendMessage(msg.to, ss);
+                        client.sendMessage(msg.to, ss, {sendMediaAsSticker:sendAsSticker);
                      }
                 } else {
                     for(let i = 0; i < intervals; i++) {
