@@ -26,7 +26,52 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             var chat = await msg.getChat();
             await chat.unmute(true);
             msg.reply("Allowed to direct message!");
-        }else if(msg.body.startsWith('!setpmmsg') && !msg.to.includes("-")){
+        } else if (msg.body === '!ping') {
+                // Send a new message to the same chat
+                client.sendMessage(msg.from, 'pong');
+        } else if (msg.body.startsWith('!desc ')) {
+            // Change the group description
+            let chat = await msg.getChat();
+            if (chat.isGroup) {
+                let newDescription = msg.body.slice(6);
+                chat.setDescription(newDescription);
+            } else {
+                msg.reply('This command can only be used in a group!');
+            }
+        } else if (msg.body === '!leave') {
+            // Leave the group
+            let chat = await msg.getChat();
+            if (chat.isGroup) {
+                chat.leave();
+            } else {
+                msg.reply('This command can only be used in a group!');
+            }
+        } else if (msg.body.startsWith('!join ')) {
+            const inviteCode = msg.body.split(' ')[1];
+            try {
+                await client.acceptInvite(inviteCode);
+                msg.reply('Joined the group!');
+            } catch (e) {
+                msg.reply('That invite code seems to be invalid.');
+            }
+        } else if (msg.body === '!groupinfo') {
+            let chat = await msg.getChat();
+            if (chat.isGroup) {
+                msg.reply(`
+                *Group Details*
+                Name: ${chat.name}
+                Description: ${chat.description}
+                Created At: ${chat.createdAt.toString()}
+                Created By: ${chat.owner.user}
+                Participant count: ${chat.participants.length}
+                `);
+            } else {
+                msg.reply('This command can only be used in a group!');
+            }
+        } else if (msg.body === '!chats') {
+            const chats = await client.getChats();
+            client.sendMessage(msg.from, `The bot has ${chats.length} chats open.`);
+        } else if(msg.body.startsWith('!setpmmsg') && !msg.to.includes("-")){
             msg.delete(true);
             if(config.pmguard_enabled == "true"){
                 const pmMsg = msg.body.replace('!setpmmsg ', '');
@@ -204,12 +249,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
         }
         else if (msg.body === '!info') {
             let info = client.info;
-            client.sendMessage(msg.from, `
-                *Connection info*
-                User name: ${info.pushname}
-                My number: ${info.wid.user}
-                Platform: ${info.platform}
-            `);
+            client.sendMessage(msg.from, `*Connection info*\n\nUser name: ${info.pushname}\nMy number: ${info.wid.user}\nPlatform: ${info.platform}`);
         }
         else if(msg.body.startsWith('!help')) {
             msg.delete(true);
