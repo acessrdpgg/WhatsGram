@@ -155,10 +155,10 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             if(msg.hasQuotedMsg) {
                 const quotedMsg = await msg.getQuotedMessage();
                 if(quotedMsg.hasMedia && isImage(quotedMsg)) {
-                    const stickerData = await quotedMessage.downloadMedia();
-                    const sticker = await new MessageMedia(stickerData.mimetype , stickerData.data);
+                    const sData = await quotedMessage.downloadMedia();
+                    const ss = await new MessageMedia(sData.mimetype , sData.data);
                     for(let i = 0; i < intervals; i++) {
-                        client.sendMessage(msg.to, sticker);
+                        client.sendMessage(msg.to, ss);
                      }
                 } else {
                     for(let i = 0; i < intervals; i++) {
