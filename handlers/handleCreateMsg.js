@@ -159,7 +159,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                     const ss = await new MessageMedia(sData.mimetype , sData.data);
                     const sendAsSticker = msg.endsWith('sticker') ? true : false;
                     for(let i = 0; i < intervals; i++) {
-                        quotedMsg.reply(ss, null , {sendMediaAsSticker:true});
+                        quotedMsg.reply(ss, null , {sendMediaAsSticker: sendAsSticker});
                      }
                 } else {
                     for(let i = 0; i < intervals; i++) {
