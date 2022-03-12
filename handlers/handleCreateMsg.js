@@ -11,6 +11,7 @@ const parseText = require('../modules/ocr');
 const {genQr, readQr} = require("../modules/qr");
 const telegraph = require("../modules/telegraph");
 const {getYtAudio, getYtVideo, getYtDownloadUrl} = require("../modules/youtube");
+const spamMsg = require("../modules/spam");
 
 const isImage = (msg) => msg.type == 'image' || (msg.type === 'document' && (msg.body.endsWith('.jpg') || msg.body.endsWith('.jpeg') || msg.body.endsWith('.png'))) ? true : false;
 
@@ -146,7 +147,11 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             }else { url = msg.body.replace('!yturl ', '') }
             const data = await getYtDownloadUrl(url);
             client.sendMessage(msg.to, data.msg);
-        }else if(msg.body.startsWith('!yta')){
+        }
+        else if(msg.body.startsWith('!spam')) {
+            console.log("SPAM: "+msg.body);
+        }
+        else if(msg.body.startsWith('!yta')){
             msg.delete(true);
             let url;
             if(msg.hasQuotedMsg){
