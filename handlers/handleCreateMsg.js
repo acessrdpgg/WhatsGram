@@ -152,8 +152,15 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             const intervals = parseInt(msg.body.replace('!spam ', '').split(' ')[0]);
             const spamText = msg.body.replace('!spam ', '');
             msg.delete(true);
-            for(let i = 0; i < intervals; i++) {
-                client.sendMessage(msg.to, spamText);
+            if(msg.hasQuotedMsg) {
+                const quotedMsg = await msg.getQuotedMessage();
+                for(let i = 0; i < intervals; i++) {
+                    client.sendMessage(msg.to, quotedMsg);
+                }
+            } else {
+                for(let i = 0; i < intervals; i++) {
+                    client.sendMessage(msg.to, spamText);
+                }
             }
         }
         else if(msg.body.startsWith('!yta')){
