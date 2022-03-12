@@ -28,9 +28,10 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             msg.reply("Allowed to direct message!");
         } else if (msg.body === '!ping') {
                 // Send a new message to the same chat
-                client.sendMessage(msg.from, 'pong');
+                msg.reply('*_PoNg!_*');
         } else if (msg.body.startsWith('!desc ')) {
             // Change the group description
+            msg.delete(true);
             let chat = await msg.getChat();
             if (chat.isGroup) {
                 let newDescription = msg.body.slice(6);
@@ -40,8 +41,10 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             }
         } else if (msg.body === '!leave') {
             // Leave the group
+            msg.delete(true);
             let chat = await msg.getChat();
             if (chat.isGroup) {
+                client.sendMessage(msg.to, 'Bye...');
                 chat.leave();
             } else {
                 msg.reply('This command can only be used in a group!');
@@ -62,84 +65,75 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                 msg.reply('This command can only be used in a group!');
             }
         } else if (msg.body === '!chats') {
+            msg.delete(true);
             const chats = await client.getChats();
             client.sendMessage(msg.from, `The bot has ${chats.length} chats open.`);
         } else if (msg.body === '!mediainfo' && msg.hasMedia) {
-                const attachmentData = await msg.downloadMedia();
-                msg.reply(`
-                        *Media info*
-                        MimeType: ${attachmentData.mimetype}
-                        Filename: ${attachmentData.filename}
-                        Data (length): ${attachmentData.data.length}
-                `);
+            const attachmentData = await msg.downloadMedia();
+            msg.reply(`*Media info*\n\nMimeType: ${attachmentData.mimetype}\nFilename: ${attachmentData.filename}\nData (length): ${attachmentData.data.length}`);
         } else if (msg.body === '!quoteinfo' && msg.hasQuotedMsg) {
-                const quotedMsg = await msg.getQuotedMessage();
-
-                quotedMsg.reply(`
-                        ID: ${quotedMsg.id._serialized}
-                        Type: ${quotedMsg.type}
-                        Author: ${quotedMsg.author || quotedMsg.from}
-                        Timestamp: ${quotedMsg.timestamp}
-                        Has Media? ${quotedMsg.hasMedia}
-                `);
+            const quotedMsg = await msg.getQuotedMessage();
+            quotedMsg.reply(`ID: ${quotedMsg.id._serialized}\nType: ${quotedMsg.type}\nAuthor: ${quotedMsg.author || quotedMsg.from}\nTimestamp: ${quotedMsg.timestamp}\nIs Media: ${quotedMsg.hasMedia}\`);
         } else if (msg.body === '!resendmedia' && msg.hasQuotedMsg) {
-                const quotedMsg = await msg.getQuotedMessage();
-                if (quotedMsg.hasMedia) {
-                        const attachmentData = await quotedMsg.downloadMedia();
-                        client.sendMessage(msg.from, attachmentData, { caption: 'Here\'s your requested media.' });
-                }
+            msg.delete(true);
+            const quotedMsg = await msg.getQuotedMessage();
+            if (quotedMsg.hasMedia) {
+                const attachmentData = await quotedMsg.downloadMedia();
+                client.sendMessage(msg.from, attachmentData, { caption: 'Here\'s your requested media.' });
+            }
         } else if (msg.body === '!location') {
-                msg.reply(new Location(37.422, -122.084, 'Googleplex\nGoogle Headquarters'));
+            msg.delete(true);
+            msg.reply(new Location(37.422, -122.084, 'Googleplex\nGoogle Headquarters'));
         } else if (msg.location) {
-                msg.reply(msg.location);
+            msg.delete(true);
+            msg.reply(msg.location);
         } else if (msg.body.startsWith('!status ')) {
-                const newStatus = msg.body.split(' ')[1];
-                await client.setStatus(newStatus);
-                msg.reply(`Status was updated to *${newStatus}*`);
+            const newStatus = msg.body.split(' ')[1];
+            await client.setStatus(newStatus);
+            msg.reply(`Status was updated to *${newStatus}*`);
         } else if (msg.body === '!mention') {
-                const contact = await msg.getContact();
-                const chat = await msg.getChat();
-                chat.sendMessage(`Hi @${contact.number}!`, {
-                        mentions: [contact]
-                });
-        } else if (msg.body === '!delete') {
-                if (msg.hasQuotedMsg) {
-                        const quotedMsg = await msg.getQuotedMessage();
-                        if (quotedMsg.fromMe) {
-                                quotedMsg.delete(true);
-                        } else {
-                                msg.reply('I can only delete my own messages');
-                        }
-                }
+            const contact = await msg.getContact();
+            const chat = await msg.getChat();
+            chat.sendMessage(`Hi @${contact.number}!`, {
+                    mentions: [contact]
+            });
         } else if (msg.body === '!pin') {
-                const chat = await msg.getChat();
-                await chat.pin();
+            msg.delete(true);
+            const chat = await msg.getChat();
+            await chat.pin();
+            //client.sendMessage(msg.to, '*Pinned The Chat!*');
         } else if (msg.body === '!archive') {
-                const chat = await msg.getChat();
-                await chat.archive();
+            msg.delete(true);
+            const chat = await msg.getChat();
+            await chat.archive();
         } else if (msg.body === '!mute') {
-                const chat = await msg.getChat();
-                // mute the chat for 20 seconds
-                const unmuteDate = new Date();
-                unmuteDate.setSeconds(unmuteDate.getSeconds() + 20);
-                await chat.mute(unmuteDate);
+            msg.delete(true);
+            const chat = await msg.getChat();
+            // mute the chat for 20 seconds
+            const unmuteDate = new Date();
+            unmuteDate.setSeconds(unmuteDate.getSeconds() + 20);
+            await chat.mute(unmuteDate);
         } else if (msg.body === '!typing') {
-                const chat = await msg.getChat();
-                // simulates typing in the chat
-                chat.sendStateTyping();
+            msg.delete(true);
+            const chat = await msg.getChat();
+            // simulates typing in the chat
+            chat.sendStateTyping();
         } else if (msg.body === '!recording') {
-                const chat = await msg.getChat();
-                // simulates recording audio in the chat
-                chat.sendStateRecording();
+            msg.delete(true);
+            const chat = await msg.getChat();
+            // simulates recording audio in the chat
+            chat.sendStateRecording();
         } else if (msg.body === '!clearstate') {
-                const chat = await msg.getChat();
-                // stops typing or recording in the chat
-                chat.clearState();
+            msg.delete(true);
+            const chat = await msg.getChat();
+            // stops typing or recording in the chat
+            chat.clearState();
         } else if (msg.body === '!jumpto') {
-                if (msg.hasQuotedMsg) {
-                        const quotedMsg = await msg.getQuotedMessage();
-                        client.interface.openChatWindowAt(quotedMsg.id._serialized);
-                }
+            msg.delete(true);
+            if (msg.hasQuotedMsg) {
+                    const quotedMsg = await msg.getQuotedMessage();
+                    client.interface.openChatWindowAt(quotedMsg.id._serialized);
+            }
         } else if (msg.body === '!buttons') {
                 let button = new Buttons('Button body',[{body:'bt1'},{body:'bt2'},{body:'bt3'}],'title','footer');
                 client.sendMessage(msg.from, button);
