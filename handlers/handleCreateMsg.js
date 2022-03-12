@@ -192,6 +192,15 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                 client.sendMessage(msg.to, data.msg);
             }
         }
+        else if (msg.body === '!info') {
+            let info = client.info;
+            client.sendMessage(msg.from, `
+                *Connection info*
+                User name: ${info.pushname}
+                My number: ${info.wid.user}
+                Platform: ${info.platform}
+            `);
+        }
         else if(msg.body.startsWith('!help')) {
             msg.delete(true);
             const helpMsg = await help.waHelp(msg.body);
