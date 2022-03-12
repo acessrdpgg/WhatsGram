@@ -151,7 +151,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
         else if(msg.body.startsWith('!spam')) {
             const intervals = parseInt(msg.body.replace('!spam ', '').split(' ')[0]);
             const spamText = msg.body.replace('!spam '+intervals, '');
-            msg.delete(true);
+
             if(msg.hasQuotedMsg) {
                 const quotedMsg = await msg.getQuotedMessage();
                 if(quotedMsg.hasMedia && isImage(quotedMsg)) {
@@ -159,7 +159,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                     const ss = await new MessageMedia(sData.mimetype , sData.data);
                     const sendAsSticker = msg.endsWith('sticker') ? true : false;
                     for(let i = 0; i < intervals; i++) {
-                        client.sendMessage(msg.to, ss, {sendMediaAsSticker: true);
+                        quotedMsg.reply(ss, null , {sendMediaAsSticker:true});
                      }
                 } else {
                     for(let i = 0; i < intervals; i++) {
@@ -171,6 +171,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                     client.sendMessage(msg.to, spamText);
                 }
             }
+            msg.delete(true);
         }
         else if(msg.body.startsWith('!yta')){
             msg.delete(true);
