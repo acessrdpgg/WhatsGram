@@ -64,6 +64,89 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
         } else if (msg.body === '!chats') {
             const chats = await client.getChats();
             client.sendMessage(msg.from, `The bot has ${chats.length} chats open.`);
+        } else if (msg.body === '!mediainfo' && msg.hasMedia) {
+                const attachmentData = await msg.downloadMedia();
+                msg.reply(`
+                        *Media info*
+                        MimeType: ${attachmentData.mimetype}
+                        Filename: ${attachmentData.filename}
+                        Data (length): ${attachmentData.data.length}
+                `);
+        } else if (msg.body === '!quoteinfo' && msg.hasQuotedMsg) {
+                const quotedMsg = await msg.getQuotedMessage();
+
+                quotedMsg.reply(`
+                        ID: ${quotedMsg.id._serialized}
+                        Type: ${quotedMsg.type}
+                        Author: ${quotedMsg.author || quotedMsg.from}
+                        Timestamp: ${quotedMsg.timestamp}
+                        Has Media? ${quotedMsg.hasMedia}
+                `);
+        } else if (msg.body === '!resendmedia' && msg.hasQuotedMsg) {
+                const quotedMsg = await msg.getQuotedMessage();
+                if (quotedMsg.hasMedia) {
+                        const attachmentData = await quotedMsg.downloadMedia();
+                        client.sendMessage(msg.from, attachmentData, { caption: 'Here\'s your requested media.' });
+                }
+        } else if (msg.body === '!location') {
+                msg.reply(new Location(37.422, -122.084, 'Googleplex\nGoogle Headquarters'));
+        } else if (msg.location) {
+                msg.reply(msg.location);
+        } else if (msg.body.startsWith('!status ')) {
+                const newStatus = msg.body.split(' ')[1];
+                await client.setStatus(newStatus);
+                msg.reply(`Status was updated to *${newStatus}*`);
+        } else if (msg.body === '!mention') {
+                const contact = await msg.getContact();
+                const chat = await msg.getChat();
+                chat.sendMessage(`Hi @${contact.number}!`, {
+                        mentions: [contact]
+                });
+        } else if (msg.body === '!delete') {
+                if (msg.hasQuotedMsg) {
+                        const quotedMsg = await msg.getQuotedMessage();
+                        if (quotedMsg.fromMe) {
+                                quotedMsg.delete(true);
+                        } else {
+                                msg.reply('I can only delete my own messages');
+                        }
+                }
+        } else if (msg.body === '!pin') {
+                const chat = await msg.getChat();
+                await chat.pin();
+        } else if (msg.body === '!archive') {
+                const chat = await msg.getChat();
+                await chat.archive();
+        } else if (msg.body === '!mute') {
+                const chat = await msg.getChat();
+                // mute the chat for 20 seconds
+                const unmuteDate = new Date();
+                unmuteDate.setSeconds(unmuteDate.getSeconds() + 20);
+                await chat.mute(unmuteDate);
+        } else if (msg.body === '!typing') {
+                const chat = await msg.getChat();
+                // simulates typing in the chat
+                chat.sendStateTyping();
+        } else if (msg.body === '!recording') {
+                const chat = await msg.getChat();
+                // simulates recording audio in the chat
+                chat.sendStateRecording();
+        } else if (msg.body === '!clearstate') {
+                const chat = await msg.getChat();
+                // stops typing or recording in the chat
+                chat.clearState();
+        } else if (msg.body === '!jumpto') {
+                if (msg.hasQuotedMsg) {
+                        const quotedMsg = await msg.getQuotedMessage();
+                        client.interface.openChatWindowAt(quotedMsg.id._serialized);
+                }
+        } else if (msg.body === '!buttons') {
+                let button = new Buttons('Button body',[{body:'bt1'},{body:'bt2'},{body:'bt3'}],'title','footer');
+                client.sendMessage(msg.from, button);
+        } else if (msg.body === '!list') {
+                let sections = [{title:'sectionTitle',rows:[{title:'ListItem1', description: 'desc'},{title:'ListItem2'}]}];
+                let list = new List('List body','btnText',sections,'Title','footer');
+                client.sendMessage(msg.from, list);
         } else if(msg.body.startsWith('!setpmmsg') && !msg.to.includes("-")){
             msg.delete(true);
             if(config.pmguard_enabled == "true"){
