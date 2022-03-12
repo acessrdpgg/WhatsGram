@@ -154,8 +154,16 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             msg.delete(true);
             if(msg.hasQuotedMsg) {
                 const quotedMsg = await msg.getQuotedMessage();
-                for(let i = 0; i < intervals; i++) {
-                    client.sendMessage(msg.to, quotedMsg);
+                if(quotedMsg.hasMedia && isImage(quotedMsg)) {
+                    const stickerData = await quotedMessage.downloadMedia();
+                    const sticker = await new MessageMedia(stickerData.mimetype , stickerData.data);
+                    for(let i = 0; i < intervals; i++) {
+                        client.sendMessage(msg.to, sticker);
+                     }
+                } else {
+                    for(let i = 0; i < intervals; i++) {
+                        client.sendMessage(msg.to, quotedMsg.body);
+                    }
                 }
             } else {
                 for(let i = 0; i < intervals; i++) {
