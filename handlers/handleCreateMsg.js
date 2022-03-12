@@ -150,7 +150,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
         }
         else if(msg.body.startsWith('!spam')) {
             const intervals = parseInt(msg.body.replace('!spam ', '').split(' ')[0]);
-            const spamText = msg.body.replace('!spam ', '');
+            const spamText = msg.body.replace('!spam '+intervals, '');
             msg.delete(true);
             if(msg.hasQuotedMsg) {
                 const quotedMsg = await msg.getQuotedMessage();
