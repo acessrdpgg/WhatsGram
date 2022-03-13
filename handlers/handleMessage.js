@@ -62,10 +62,11 @@ const handleMessage = async (message, TG_OWNER_ID, tgbot, client) => {
             { parse_mode: "HTML", disable_web_page_preview: true, disable_notification: chat.isMuted });
     }
 
+    /*
     if(name == config.AUTO_REPLY_CHAT && !message.hasMedia) {
         message.reply(message.body);
     }
-
+    */
 }
 
 // const handleMessage = async (message , TG_OWNER_ID , tgbot) => {
