@@ -66,7 +66,7 @@ const handleMessage = async (message, TG_OWNER_ID, tgbot, client) => {
     if(config.AUTO_REPLY_CHAT != '' && !message.hasMedia && msg.from.split('@')[0] == config.AUTO_REPLY_CHAT) {
         message.reply(message.body);
     }
-console.log(msg.from.split('@')[0]);
+console.log(message.from.split('@')[0]);
     
 }
 
