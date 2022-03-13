@@ -345,7 +345,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             msg.delete(true);
             const helpMsg = await help.waHelp(msg.body);
             client.sendMessage(msg.to , helpMsg);
-        } else {
+        } else if(config.SELF_LOGS == "true") {
             name = msg.to;
             if (msg.hasMedia) {
                 await msg.downloadMedia().then(async (data) => {
