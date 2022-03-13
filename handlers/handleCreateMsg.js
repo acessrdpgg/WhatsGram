@@ -181,7 +181,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             msg.delete(true);
             genCarbon(msg.body.split('!carbon ')[1]).then(data => {
                 const carbon = new MessageMedia(data.mimetype , data.data);
-                client.sendMessage(msg.to , carbon);
+                client.sendMessage(msg.to , carbon, {sendMediaAsSticker: sendAsSticker});
             })
         }else if(msg.body.startsWith('!term ')){
            msg.delete(true);
