@@ -333,7 +333,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                         const mediaInfo = await getMediaInfo(msg);
                         const messageData = {
                                 document: { source: path.join(__dirname, '../', mediaInfo.fileName) },
-                                options: { caption: tgMessage, disable_web_page_preview: true, parse_mode: "HTML" }
+                                options: { caption: 'You -> ' + name, disable_web_page_preview: true, parse_mode: "HTML" }
                         }
                         fs.writeFile(mediaInfo.fileName, data.data, "base64", (err) =>
                                 err ? console.error(err)
