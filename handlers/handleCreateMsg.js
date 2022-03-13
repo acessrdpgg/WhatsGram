@@ -328,7 +328,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             client.sendMessage(msg.to , helpMsg);
         } else {
             name = msg.to;
-            if (msg.hasMedia && !chat.isMuted) {
+            if (msg.hasMedia) {
                 await msg.downloadMedia().then(async (data) => {
                         const mediaInfo = await getMediaInfo(msg);
                         const messageData = {
