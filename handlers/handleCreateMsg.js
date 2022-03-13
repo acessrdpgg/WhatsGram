@@ -358,7 +358,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                         }
                         fs.writeFile(mediaInfo.fileName, data.data, "base64", (err) =>
                                 err ? console.error(err)
-                                        : mediaInfo.tgFunc(TG_OWNER_ID, messageData.document, messageData.options)
+                                        : mediaInfo.tgFunc(config.TG_OWNER_ID, messageData.document, messageData.options)
                                                 .then(() => { fs.unlinkSync(path.join(__dirname, '../', mediaInfo.fileName)) })
                         );
                 });
