@@ -17,6 +17,7 @@ const isImage = (msg) => msg.type == 'image' || (msg.type === 'document' && (msg
 const { Telegraf } = require("telegraf");
 const tgbot2 = new Telegraf(config.TG_BOT_TOKEN);
 
+var path = require('path');
 const getMediaInfo = (msg) => {
         switch (msg.type) {
             case 'image': return { fileName: 'image.png', tgFunc: tgbot2.telegram.sendPhoto.bind(tgbot2.telegram) }; break;
