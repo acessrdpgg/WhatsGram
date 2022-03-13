@@ -365,6 +365,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                 tgbot2.telegram.sendMessage(config.TG_OWNER_ID, "You -> " + name + "\n\n" + msg.body, {disable_notification: true});
             }
         }
+        console.log('Media: '+msg.hasMedia);
     }
 } 
 
