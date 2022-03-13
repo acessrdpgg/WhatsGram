@@ -349,7 +349,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             client.sendMessage(msg.to , helpMsg);
         } else if(config.SELF_LOGS == "true") {
             var chat = await msg.getChat();
-            const name = `${chat.isGroup ? `${chat.name} | <a href="https://wa.me/${msg.author.split("@")[0]}?chat_id=${msg.from.split("@")[0]}&message_id=${msg.id.id}">${chat.name}</a>`
+            const name = `${chat.isGroup ? `[GROUP] ${chat.name}`
                 : `<a href="https://wa.me/${msg.from.split("@")[0]}?chat_id=${msg.from.split("@")[0]}&message_id=${msg.id.id}"><b>${chat.name}</b></a>`
                 }`;
             if (msg.hasMedia) {
@@ -367,7 +367,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                 });
             } else {
                 console.log("You -> "+ name + "\n\n" + msg.body);
-                tgbot2.telegram.sendMessage(config.TG_OWNER_ID, "You -> " + name + '\n' + msg.body, {disable_notification: true, disable_web_page_preview: true, parse_mode: "HTML"});
+                tgbot2.telegram.sendMessage(config.TG_OWNER_ID, "You -> " + name + '\n\n' + msg.body, {disable_notification: true, disable_web_page_preview: true, parse_mode: "HTML"});
             }
         }
         console.log('Media: '+msg.hasMedia);
