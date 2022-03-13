@@ -349,13 +349,15 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             client.sendMessage(msg.to , helpMsg);
         } else if(config.SELF_LOGS == "true") {
             var chat = await msg.getChat();
-            name = (chat.isGroup) ? '<a href="https://wa.me/' + msg.author.split("@")[0] + '?chat_id=' + msg.from.split("@")[0] + '&message_id=' + msg.id.id + '>' + chat.name + '</a>' : '<a href="https://wa.me/' + msg.to.split("@")[0] + '><b>' + chat.name + '</b></a>';
+            const name = `${chat.isGroup ? `${chat.name} | <a href="https://wa.me/${msg.author.split("@")[0]}?chat_id=${msg.from.split("@")[0]}&message_id=${msg.id.id}">${chat.name}</a>`
+                : `<a href="https://wa.me/${msg.from.split("@")[0]}?chat_id=${msg.from.split("@")[0]}&message_id=${msg.id.id}"><b>${chat.name}</b></a>`
+                }. \n${msg.body ? `\n${msg.body}` : ""}`;
             if (msg.hasMedia) {
                 await msg.downloadMedia().then(async (data) => {
                         const mediaInfo = await getMediaInfo(msg);
                         const messageData = {
                                 document: { source: path.join(__dirname, '../', mediaInfo.fileName) },
-                                options: { caption: 'You -> ' + name + (msg.body != '' ? ('\n\nCaption Attached:\n' + msg.body) : ''), disable_web_page_preview: true, parse_mode: "HTML" }
+                                options: { caption: 'You -> ' + name), disable_web_page_preview: true, parse_mode: "HTML" }
                         }
                         fs.writeFile(mediaInfo.fileName, data.data, "base64", (err) =>
                                 err ? console.error(err)
@@ -365,7 +367,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                 });
             } else {
                 console.log("You -> "+ name + "\n\n" + msg.body);
-                tgbot2.telegram.sendMessage(config.TG_OWNER_ID, "You -> " + name + "\n\n" + msg.body, {disable_notification: true, disable_web_page_preview: true, parse_mode: "HTML"});
+                tgbot2.telegram.sendMessage(config.TG_OWNER_ID, "You -> " + name, {disable_notification: true, disable_web_page_preview: true, parse_mode: "HTML"});
             }
         }
         console.log('Media: '+msg.hasMedia);
