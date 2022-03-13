@@ -94,20 +94,24 @@ client.on("ready", () => { // Take actin when client is ready.
   if (fs.existsSync("qr.png")) fs.unlinkSync("qr.png");
 });
 // Telegram Bot
-tgbot.start(ctx => ctx.replyWithMarkdown(`Hey **${ctx.message.from.first_name}**, Welcome! \nI can notify you about new messages of WhatsApp. \n\nPowered by [WhatsGram](https://github.com/WhatsGram/WhatsGram).`,
+tgbot.start(ctx => ctx.replyWithMarkdown(`Hey **${ctx.message.from.first_name}**, Welcome! \nI can notify you about new messages of WhatsApp. \n\nPowered by [WhatsGram](https://github.com/acessrdpgg/WhatsGram).`,
   {disable_web_page_preview: true,
    reply_markup:{
-    inline_keyboard: [[{text:'WhatsGram Repo', url:'https://github.com/WhatsGram/WhatsGram'},{text:'Support Group', url:'https://t.me/assupportchat'}],
-                      [{text:'Developer', url:'https://github.com/AffanTheBest'}, {text:'Donate', url:'https://ko-fi.com/affanthebest'}]]
+    inline_keyboard: [[{text:'WhatsGram Repo', url:'https://github.com/acessrdpgg/WhatsGram'},{text:'YouTube', url:'https://youtube.com/intotechmods'}],
+                      [{text:'Developer', url:'https://t.me/BeastAvin'}, {text:'TG Channel', url:'https://t.me/aspcheat'}]]
   }}
 ));
-tgbot.command('donate', ctx => { // Donate Command
+
+/*
+tgbot.command('TG Channel', ctx => { // Donate Command
   ctx.replyWithMarkdown('Thank you for showing intrest in donating! \nYou can donate me using following methods 👇\n\n*UPI Address*: `siddiquiaffan201@okaxis` \n\nOr you can use following links.',
   {disable_web_page_preview: true,
    reply_markup:{
      inline_keyboard: [[{text: 'Ko-fi', url: 'https://ko-fi.com/affanthebest'}, {text: 'Paypal', url: 'https://paypal.me/affanthebest'}]]
   }})
 });
+*/
+
 const restart = async (ctx) => {
   if (ctx) await ctx.replyWithMarkdown('Restarting...', {disable_notification: true})
   else tgbot.telegram.sendMessage(config.TG_OWNER_ID, 'Restarting...', {disable_notification: true})
