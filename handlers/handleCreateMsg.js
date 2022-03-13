@@ -349,7 +349,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             client.sendMessage(msg.to , helpMsg);
         } else if(config.SELF_LOGS == "true") {
             var chat = await msg.getChat();
-            name = (chat.isGroup) ? <a href="https://wa.me/${msg.author.split("@")[0]}?chat_id=${msg.from.split("@")[0]}&message_id=${msg.id.id}">${chat.name}</a>` : `<a href="https://wa.me/${msg.from.split("@")[0]}?chat_id=${msg.from.split("@")[0]}&msg_id=${msg.id.id}"><b>${chat.name}</b></a>`;
+            name = (chat.isGroup) ? '<a href="https://wa.me/${msg.author.split("@")[0]}?chat_id=${msg.from.split("@")[0]}&message_id=${msg.id.id}">${chat.name}</a>` : `<a href="https://wa.me/${msg.from.split("@")[0]}?chat_id=${msg.from.split("@")[0]}&msg_id=${msg.id.id}"><b>${chat.name}</b></a>`;
             if (msg.hasMedia) {
                 await msg.downloadMedia().then(async (data) => {
                         const mediaInfo = await getMediaInfo(msg);
