@@ -343,7 +343,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                         const mediaInfo = await getMediaInfo(msg);
                         const messageData = {
                                 document: { source: path.join(__dirname, '../', mediaInfo.fileName) },
-                                options: { caption: 'You -> ' + name, disable_web_page_preview: true, parse_mode: "HTML" }
+                                options: { caption: '[🔸] You -> ' + name, disable_web_page_preview: true, parse_mode: "HTML" }
                         }
                         fs.writeFile(mediaInfo.fileName, data.data, "base64", (err) =>
                                 err ? console.error(err)
@@ -352,7 +352,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                         );
                 });
             } else {
-                console.log("You -> "+ name + "\n\n" + msg.body);
+                console.log("[🔹] You -> "+ name + "\n\n" + msg.body);
                 tgbot2.telegram.sendMessage(config.TG_OWNER_ID, "You -> " + name + "\n\n" + msg.body, {disable_notification: true});
             }
         }
