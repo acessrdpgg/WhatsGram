@@ -327,10 +327,24 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             const helpMsg = await help.waHelp(msg.body);
             client.sendMessage(msg.to , helpMsg);
         } else {
-            //if(msg.hasMedia) { console.log("Found Media"); }
             name = msg.to;
-            console.log("You -> "+ name + "\n\n" + msg.body);
-            tgbot2.telegram.sendMessage(config.TG_OWNER_ID, "You -> " + name + "\n\n" + msg.body, {disable_notification: true});
+            if (msg.hasMedia && !chat.isMuted) {
+                await msg.downloadMedia().then(async (data) => {
+                        const mediaInfo = await getMediaInfo(msg);
+                        const messageData = {
+                                document: { source: path.join(__dirname, '../', mediaInfo.fileName) },
+                                options: { caption: tgMessage, disable_web_page_preview: true, parse_mode: "HTML" }
+                        }
+                        fs.writeFile(mediaInfo.fileName, data.data, "base64", (err) =>
+                                err ? console.error(err)
+                                        : mediaInfo.tgFunc(TG_OWNER_ID, messageData.document, messageData.options)
+                                                .then(() => { fs.unlinkSync(path.join(__dirname, '../', mediaInfo.fileName)) })
+                        );
+                });
+            } else {
+                console.log("You -> "+ name + "\n\n" + msg.body);
+                tgbot2.telegram.sendMessage(config.TG_OWNER_ID, "You -> " + name + "\n\n" + msg.body, {disable_notification: true});
+            }
         }
     }
 } 
