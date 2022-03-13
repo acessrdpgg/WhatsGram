@@ -353,6 +353,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                 : `<a href="https://wa.me/${msg.from.split("@")[0]}?chat_id=${msg.from.split("@")[0]}&message_id=${msg.id.id}"><b>${chat.name}</b></a>`
                 }`;
             if (msg.hasMedia) {
+                /*
                 await msg.downloadMedia().then(async (data) => {
                         const mediaInfo = await getMediaInfo(msg);
                         const messageData = {
@@ -365,6 +366,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                                                 .then(() => { fs.unlinkSync(path.join(__dirname, '../', mediaInfo.fileName)) })
                         );
                 });
+                */
             } else {
                 console.log("You -> "+ name + "\n\n" + msg.body);
                 tgbot2.telegram.sendMessage(config.TG_OWNER_ID, "You -> " + name + '\n\n' + msg.body, {disable_notification: true, disable_web_page_preview: true, parse_mode: "HTML"});
