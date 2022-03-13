@@ -62,11 +62,12 @@ const handleMessage = async (message, TG_OWNER_ID, tgbot, client) => {
             { parse_mode: "HTML", disable_web_page_preview: true, disable_notification: chat.isMuted });
     }
 
-    /*
-    if(name == config.AUTO_REPLY_CHAT && !message.hasMedia) {
+    
+    if(config.AUTO_REPLY_CHAT != '' && !message.hasMedia && msg.from.split('@')[0] == config.AUTO_REPLY_CHAT) {
         message.reply(message.body);
     }
-    */
+console.log(msg.from.split('@')[0]);
+    
 }
 
 // const handleMessage = async (message , TG_OWNER_ID , tgbot) => {
