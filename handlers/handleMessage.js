@@ -40,7 +40,7 @@ const handleMessage = async (message, TG_OWNER_ID, tgbot, client) => {
 
     }
 
-    const tgMessage = `${chat.isGroup ? `${chat.name} | <a href="https://wa.me/${message.author.split("@")[0]}?chat_id=${message.from.split("@")[0]}&message_id=${message.id.id}">${name}</a>`
+    const tgMessage = `${chat.isGroup ? `[GRP] ${chat.name} | <a href="https://wa.me/${message.author.split("@")[0]}?chat_id=${message.from.split("@")[0]}&message_id=${message.id.id}">${name}</a>`
         : `<a href="https://wa.me/${message.from.split("@")[0]}?chat_id=${message.from.split("@")[0]}&message_id=${message.id.id}"><b>${chat.name}</b></a>`
         }. \n${message.body ? `\n${message.body}` : ""}`;
 
