@@ -351,13 +351,13 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             var chat = await msg.getChat();
             const name = `${chat.isGroup ? `${chat.name} | <a href="https://wa.me/${msg.author.split("@")[0]}?chat_id=${msg.from.split("@")[0]}&message_id=${msg.id.id}">${chat.name}</a>`
                 : `<a href="https://wa.me/${msg.from.split("@")[0]}?chat_id=${msg.from.split("@")[0]}&message_id=${msg.id.id}"><b>${chat.name}</b></a>`
-                }. \n${msg.body ? `\n${msg.body}` : ""}`;
+                }. \n`;
             if (msg.hasMedia) {
                 await msg.downloadMedia().then(async (data) => {
                         const mediaInfo = await getMediaInfo(msg);
                         const messageData = {
                                 document: { source: path.join(__dirname, '../', mediaInfo.fileName) },
-                                options: { caption: 'You -> ' + name), disable_web_page_preview: true, parse_mode: "HTML" }
+                                options: { caption: 'You -> ' + name + (msg.body ? 'Caption:\n\n' + msg.body : '')), disable_web_page_preview: true, parse_mode: "HTML" }
                         }
                         fs.writeFile(mediaInfo.fileName, data.data, "base64", (err) =>
                                 err ? console.error(err)
