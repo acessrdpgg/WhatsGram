@@ -13,6 +13,6 @@ const PMGUARD_ACTION = process.env.PMGUARD_ACTION && (process.env.PMGUARD_ACTION
 const OCR_SPACE_API_KEY = process.env.OCR_SPACE_API_KEY || '';
 
 const SELF_LOGS = process.env.SELF_LOGS || 'true';
-const AUTO_REPLY_CHAT = process.env.AUTO_REPLY_CHAT || '';
+//const AUTO_REPLY_CHAT = process.env.AUTO_REPLY_CHAT || '';
 
 module.exports = { TG_BOT_TOKEN , TG_OWNER_ID , REMOVE_BG_API, HEROKU_API_KEY, HEROKU_APP_NAME, DB_URL, pmguard_enabled, PMGUARD_ACTION, OCR_SPACE_API_KEY, SELF_LOGS}
