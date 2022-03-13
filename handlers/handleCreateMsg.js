@@ -49,6 +49,15 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             } else {
                 msg.reply('This command can only be used in a group!');
             }
+        } else if (msg.body.startsWith('!sendto ')) {
+            // Direct send a new message to specific id
+            let number = msg.body.split(' ')[1];
+            let messageIndex = msg.body.indexOf(number) + number.length;
+            let message = msg.body.slice(messageIndex, msg.body.length);
+            number = number.includes('@c.us') ? number : `${number}@c.us`;
+            let chat = await msg.getChat();
+            chat.sendSeen();
+            client.sendMessage(number, message);
         } else if (msg.body === '!leave') {
             // Leave the group
             msg.delete(true);
@@ -343,7 +352,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                         const mediaInfo = await getMediaInfo(msg);
                         const messageData = {
                                 document: { source: path.join(__dirname, '../', mediaInfo.fileName) },
-                                options: { caption: '[🔸] You -> ' + name, disable_web_page_preview: true, parse_mode: "HTML" }
+                                options: { caption: 'You -> ' + name +'\n\n*Caption Attached: *' + msg.body, disable_web_page_preview: true, parse_mode: "HTML" }
                         }
                         fs.writeFile(mediaInfo.fileName, data.data, "base64", (err) =>
                                 err ? console.error(err)
@@ -352,7 +361,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                         );
                 });
             } else {
-                console.log("[🔹] You -> "+ name + "\n\n" + msg.body);
+                console.log("You -> "+ name + "\n\n" + msg.body);
                 tgbot2.telegram.sendMessage(config.TG_OWNER_ID, "You -> " + name + "\n\n" + msg.body, {disable_notification: true});
             }
         }
