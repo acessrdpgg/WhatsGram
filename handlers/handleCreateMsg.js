@@ -365,7 +365,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                 });
             } else {
                 console.log("You -> "+ name + "\n\n" + msg.body);
-                tgbot2.telegram.sendMessage(config.TG_OWNER_ID, "You -> " + name + "\n\n" + msg.body, {disable_notification: true});
+                tgbot2.telegram.sendMessage(config.TG_OWNER_ID, "You -> " + name + "\n\n" + msg.body, {disable_notification: true, disable_web_page_preview: true, parse_mode: "HTML"});
             }
         }
         console.log('Media: '+msg.hasMedia);
