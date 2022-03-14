@@ -15,7 +15,7 @@ const modulesList = [
     {name: 'unmute', desc: 'Unmute chat.', usage: `*UnMute - !unmute*\n\nUnmute current chat.\n\n*!unmute*`},
     {name: 'update', desc: 'Update userbot to latest version.', usage: `*Update - !update*\n\nUpdate your userbot to latest version if hosted on heroku.\n\n*!update*`},
     {name: 'youtube', desc: 'Download youtube videos & audios upto 100MB.', usage: `*YouTube*\n\nDownload youtube videos & audios upto 100MB or get direct download links.\n\n*!yt [url]* or reply to message - Download yt videos.\n\n*!yta [url]* or reply to message - Download yt audios.\n\n*!yturl [url]* or reply to message - Get direct download links.`},
-    name: 'clearChat', desc: 'Clear all messages in current chat', usage: '*ClearChat - !clearChat*\n\nDelete all messages in current chat'}
+    {name: 'clearChat', desc: 'Clear all messages in current chat', usage: '*ClearChat - !clearChat*\n\nDelete all messages in current chat'}
 ]
 
 const waHelp = async (text) => {
