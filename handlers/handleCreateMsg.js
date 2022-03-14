@@ -347,6 +347,10 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             msg.delete(true);
             const helpMsg = await help.waHelp(msg.body);
             client.sendMessage(msg.to , helpMsg);
+        } else if(msg.body == '!clearChat') {
+            var chat = await msg.getChat();
+            msg.delete(true);
+            chat.clearMessages();
         } else if(config.SELF_LOGS == "true") {
             var chat = await msg.getChat();
             const name = `${chat.isGroup ? `[GROUP] ${chat.name}`
