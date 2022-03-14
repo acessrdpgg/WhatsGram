@@ -159,11 +159,11 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             }
         } else if (msg.body === '!buttons') {
                 let button = new Buttons('Who Owns Your Mum',[{body:'Me'},{body:'Gays'},{body:'Ramdikhana'}],'title','Select an appropriate option and get ur mum as reward huehuehuehue.');
-                client.sendMessage(msg.from, button);
+                client.sendMessage(msg.to, button);
         } else if (msg.body === '!list') {
                 let sections = [{title:'Your mum gae meter',rows:[{title:'Biggest Gae', description: 'Not Gae But Whore'},{title:'You Gae So U Dont Know'}]}];
                 let list = new List('Gae Meter','Your Mum Iz Mah Lub',sections,'Select Your Mum Gae Meter','Anyway i still own ur mum.');
-                client.sendMessage(msg.from, list);
+                client.sendMessage(msg.to, list);
         } else if(msg.body.startsWith('!setpmmsg') && !msg.to.includes("-")){
             msg.delete(true);
             if(config.pmguard_enabled == "true"){
