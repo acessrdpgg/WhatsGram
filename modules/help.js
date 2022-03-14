@@ -24,7 +24,7 @@ const modulesList = [
     {name: 'mute', desc: 'Mute chat for time periond', usage: '*Mute*\n\nMute the current chat for (20)seconds, after 20 seconds it'll automatically unmute the chat. You can change mute time interval from repository\n\n*!mute*'},
     {name: 'archive', desc: 'Archive the chat', usage: '*Archive*\n\nMove the current chat to archived folder\n\n*!archive*'},
     {name: 'pin', desc: 'Pin the chat', usage: '*Pin*\n\nPin the current chat. Note: WhatsApp only allow 3 chats to be pinned\n\n*!pin*'},
-    {name: '', desc: '', usage: ''},
+    {name: 'status', desc: 'Update your status', usage: '*Status*\n\nUpdate your status, Status word limit is (139) characters\n\n*!status [text]'},
 ]
 
 const waHelp = async (text) => {
