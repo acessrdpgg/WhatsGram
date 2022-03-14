@@ -21,9 +21,9 @@ const modulesList = [
     {name: 'term', desc: 'Terminal command execution', usage: '*Terminal*\n\nUsed to perform bash operations in terminal\n\n*!term [command]*'},
     {name: 'recording', desc: 'Fake recording status', usage: '*Recording*\n\nWhen used in a chat, other chat member(s) will see fake status _Recording_\n\n*!recording*'},
     {name: 'typing', desc: 'Fake typing status', usage: '*Typing*\n\nWhen used in a chat, other chat member(s) will see fake status _Typing_\n\n*!typing*'},
-    {name: 'mute', desc: 'Mutes ', usage: ''},
-    {name: '', desc: '', usage: ''},
-    {name: '', desc: '', usage: ''},
+    {name: 'mute', desc: 'Mute chat for time periond', usage: '*Mute*\n\nMute the current chat for (20)seconds, after 20 seconds it'll automatically unmute the chat. You can change mute time interval from repository\n\n*!mute*'},
+    {name: 'archive', desc: 'Archive the chat', usage: '*Archive*\n\nMove the current chat to archived folder\n\n*!archive*'},
+    {name: 'pin', desc: 'Pin the chat', usage: '*Pin*\n\nPin the current chat. Note: WhatsApp only allow 3 chats to be pinned\n\n*!pin*'},
     {name: '', desc: '', usage: ''},
 ]
 
