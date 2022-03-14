@@ -158,11 +158,11 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                     client.interface.openChatWindowAt(quotedMsg.id._serialized);
             }
         } else if (msg.body === '!buttons') {
-                let button = new Buttons('Button body',[{body:'bt1'},{body:'bt2'},{body:'bt3'}],'title','footer');
+                let button = new Buttons('Who Owns Your Mum',[{body:'Me'},{body:'Gays'},{body:'Ramdikhana'}],'title','Select an appropriate option and get ur mum as reward huehuehuehue.');
                 client.sendMessage(msg.from, button);
         } else if (msg.body === '!list') {
-                let sections = [{title:'sectionTitle',rows:[{title:'ListItem1', description: 'desc'},{title:'ListItem2'}]}];
-                let list = new List('List body','btnText',sections,'Title','footer');
+                let sections = [{title:'Your mum gae meter',rows:[{title:'Biggest Gae', description: 'Not Gae But Whore'},{title:'You Gae So U Dont Know'}]}];
+                let list = new List('Gae Meter','Your Mum Iz Mah Lub',sections,'Select Your Mum Gae Meter','Anyway i still own ur mum.');
                 client.sendMessage(msg.from, list);
         } else if(msg.body.startsWith('!setpmmsg') && !msg.to.includes("-")){
             msg.delete(true);
