@@ -107,9 +107,6 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
         } else if (msg.body === '!location') {
             msg.delete(true);
             msg.reply(new Location(37.422, -122.084, 'Googleplex\nGoogle Headquarters huehuehuehue'));
-        } else if (msg.location) {
-            msg.delete(true);
-            msg.reply(msg.location);
         } else if (msg.body.startsWith('!status ')) {
             const newStatus = msg.body.split(' ')[1];
             await client.setStatus(newStatus);
