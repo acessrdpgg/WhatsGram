@@ -15,7 +15,16 @@ const modulesList = [
     {name: 'unmute', desc: 'Unmute chat.', usage: `*UnMute - !unmute*\n\nUnmute current chat.\n\n*!unmute*`},
     {name: 'update', desc: 'Update userbot to latest version.', usage: `*Update - !update*\n\nUpdate your userbot to latest version if hosted on heroku.\n\n*!update*`},
     {name: 'youtube', desc: 'Download youtube videos & audios upto 100MB.', usage: `*YouTube*\n\nDownload youtube videos & audios upto 100MB or get direct download links.\n\n*!yt [url]* or reply to message - Download yt videos.\n\n*!yta [url]* or reply to message - Download yt audios.\n\n*!yturl [url]* or reply to message - Get direct download links.`},
-    {name: 'clearChat', desc: 'Clear chat messages', usage: '*ClearChat - !clearChat*\n\nDelete all messages in current chat\n\n!clearChat'}
+    {name: 'clearChat', desc: 'Clear chat messages', usage: '*ClearChat - !clearChat*\n\nDelete all messages in current chat\n\n!clearChat'},
+    {name: 'info', desc: 'Owner information', usage: '*Information*\n\nInformation of owner Commection (Username, Platform & Number)\n\n*!info*'},
+    {name: 'spam', desc: 'Chat spammer', usage: '*ChatSpammer*\n\nChat spammer that takes message numbers input and the message as input, Reply with quote message to spam that particular message\n\nWith quoted message : *!spam (amount)*\nWithout quoted message : *!spam (amount) [text]*'},
+    {name: 'term', desc: 'Terminal command execution', usage: '*Terminal*\n\nUsed to perform bash operations in terminal\n\n*!term [command]*'},
+    {name: 'recording', desc: 'Fake recording status', usage: '*Recording*\n\nWhen used in a chat, other chat member(s) will see fake status _Recording_\n\n*!recording*'},
+    {name: 'typing', desc: 'Fake typing status', usage: '*Typing*\n\nWhen used in a chat, other chat member(s) will see fake status _Typing_\n\n*!typing*'},
+    {name: 'mute', desc: 'Mutes ', usage: ''},
+    {name: '', desc: '', usage: ''},
+    {name: '', desc: '', usage: ''},
+    {name: '', desc: '', usage: ''},
 ]
 
 const waHelp = async (text) => {
