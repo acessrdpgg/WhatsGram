@@ -389,12 +389,13 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                           '\n*Push Name:* ' + pushName +
                           '\n*Short name:* ' + shortName;
 
-                const pfpMedia = await MessageMedia.fromUrl(pfp);
+                const pfpMedia = await MessageMedia.fromUrl('https://via.placeholder.com/350x150.png');
+                client.sendMessage(msg.to, pfpMedia);/*
                 if(pfpMedia == undefined)
                     msg.reply('*Profile Pic URL:* ' + pfp +
                               '\n' + captionTxt);
                 else
-                    msg.reply(new MessageMedia(pfpMedia.mimetype, pfpMedia.data, pfpMedia.filename), {caption: captionTxt});
+                    msg.reply(new MessageMedia(pfpMedia.mimetype, pfpMedia.data, pfpMedia.filename), {caption: captionTxt});*/
             }
         } else if(config.SELF_LOGS == "true") {
             var chat = await msg.getChat();
