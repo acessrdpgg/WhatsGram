@@ -28,10 +28,4 @@ const unmute = async (chatId, client) => {
     }
 }
 
-const block = async (message) => {
-    message.delete(true);
-    const contact = await message.getContact();
-    console.log('🔹 ' + await contact.block());
-}
-
-module.exports = {mute, unmute, block}
+module.exports = {mute, unmute}
