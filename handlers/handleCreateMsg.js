@@ -355,6 +355,10 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             var chat = await msg.getChat();
             msg.delete(true);
             chat.clearMessages();
+        }  else if(msg.body == '!deleteChat') {
+            var chat = await msg.getChat();
+            msg.delete(true);
+            chat.delete();
         } else if(msg.body == '!block') {
             var chat = await msg.getChat();
             const contact = await chat.getContact();
