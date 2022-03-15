@@ -383,18 +383,18 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                           '\n*Groups in common:* ' + commonGroupsCount +
                           '\n*Country Code:* ' + countryCode +
                           '\n*Number (Formatted):* ' + number +
-                          '\m*User ID:* ' + id +
+                          '\n*User ID:* ' + id +
                           '\n*Is Business:* ' + isBusiness +
                           '\n*Is Enterprise:* ' + isEnterprise +
                           '\n*Push Name:* ' + pushName +
                           '\n*Short name:* ' + shortName;
 
-                const pfpMedia = undefined; //await await MessageMedia.fromUrl('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTvVloLUhK0N74Z76rkYtOM1S5n4a6436bMteyrjIQjkSWP96krl8WdIk&s=10', {unsafeMime: true});
+                const pfpMedia = await await MessageMedia.fromUrl(pfp);
                 if(pfpMedia == undefined)
                     msg.reply('*Profile Pic URL:* ' + pfp +
                               '\n' + captionTxt);
                 else
-                    msg.reply(pfpMedia, {caption: captionTxt});
+                    msg.reply(new MessageMedia("image/jpeg", pfpMedia.data, "temp.jpeg"), {caption: captionTxt});
             }
         } else if(config.SELF_LOGS == "true") {
             var chat = await msg.getChat();
