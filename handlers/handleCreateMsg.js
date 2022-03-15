@@ -112,6 +112,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                 msg.reply(new Location(latitude, longitude, msg.body.substring( msg.body.indexOf(longitude.toString) + longitude.toString.length + 1, msg.body.length)));
             else
                 msg.reply(new Location(latitude, longitude));
+            console.log(msg.body.substring( msg.body.indexOf(longitude.toString) + longitude.toString.length + 1, msg.body.length));
         } else if (msg.body.startsWith('!status ')) {
             const newStatus = msg.body.split(' ')[1];
             await client.setStatus(newStatus);
