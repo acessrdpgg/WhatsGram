@@ -370,7 +370,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             if(contact != undefined) {
                 const pfp = await contact.getProfilePicUrl();
                 const about = await contact.getAbout();
-                const commonGroupsArr[] = await contact.getCommonGroups();
+                const commonGroupsArr = await contact.getCommonGroups();
                 const commonGroupsCount = commonGroupArr.length;
                 const countryCode = await contact.getCountryCode();
                 const number = await contact.getFormattedNumber();
