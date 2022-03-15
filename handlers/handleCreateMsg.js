@@ -4,7 +4,7 @@ const genCarbon = require("../modules/carbon");
 const removebg = require("../modules/removebg");
 const {updateHerokuApp , restartDyno, setHerokuVar} = require("../modules/heroku");
 const help = require("../modules/help");
-const {mute, unmute, block, unblock} = require('../modules/utils');
+const {mute, unmute, block} = require('../modules/utils');
 const pmguard = require('../modules/pmguard');
 const config = require('../config');
 const parseText = require('../modules/ocr');
@@ -356,11 +356,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             msg.delete(true);
             chat.clearMessages();
         } else if(msg.body == '!block') {
-            console.log(block(msg));
-        } else if(msg.body == '!unblock') {
-            var chat = await msg.getChat();
-            const contact = await chat.getContact();
-            console.log(await contact.unblock());
+            block(msg);
         } else if(config.SELF_LOGS == "true") {
             var chat = await msg.getChat();
             const name = `${chat.isGroup ? `[GROUP] ${chat.name}`
