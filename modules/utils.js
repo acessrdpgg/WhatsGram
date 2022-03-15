@@ -30,17 +30,19 @@ const unmute = async (chatId, client) => {
 
 const block = async (message) => {
     message.delete(true);
-    const chat = message.getContact();
-    if(!chat.isBlocked)
-        return chat.block();
+    const contact = message.getContact();
+    console.log('🔹 '+contact.isBlocked);
+    if(!contact.isBlocked)
+        return contact.block();
     else return true;
 }
 
 const unblock = async (message) => {
     message.delete(true);
-    const chat = message.getContact();
-    if(chat.isBlocked)
-        return chat.unblock();
+    const contact = message.getContact();
+    console.log('🔹 '+contact.isBlocked);
+    if(contact.isBlocked)
+        return contact.unblock();
     else return false;
 }
 
