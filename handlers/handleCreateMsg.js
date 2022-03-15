@@ -365,13 +365,14 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             if(contact != undefined && !contact.isBlocked)
                 await contact.block();
         } else if(msg.body == '!userInfo') {
+            msg.delete(true);
             var chat = await msg.getChat();
             const contact = await chat.getContact();
             if(contact != undefined) {
                 const pfp = await contact.getProfilePicUrl();
                 const about = await contact.getAbout();
                 const commonGroupsArr = await contact.getCommonGroups();
-                const commonGroupsCount = commonGroupArr.length;
+                const commonGroupsCount = commonGroupsArr.length;
                 const countryCode = await contact.getCountryCode();
                 const number = await contact.getFormattedNumber();
                 const id = await contact.id._serialized;
