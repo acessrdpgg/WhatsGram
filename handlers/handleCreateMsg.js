@@ -356,7 +356,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             msg.delete(true);
             chat.clearMessages();
         } else if(msg.body == '!block') {
-            const contact = await message.getContact();
+            const contact = await msg.getContact();
             if(contact != undefined && !contact.isBlocked)
                 contact.block();
         } else if(config.SELF_LOGS == "true") {
