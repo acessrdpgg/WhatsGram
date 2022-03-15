@@ -380,14 +380,14 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                 const shortName = await contact.shortname;
                 
                 const captionTxt = '*About:* ' + about +
-                          '\n*Groups in common: *' + commonGroupsCount +
-                          '\n*Country Code: *' + countryCode +
-                          '\n*Number (Formatted): *' + number +
-                          '\m*User ID: *' + id +
-                          '\n*Is Business: *' + isBusiness +
-                          '\n*Is Enterprise: *' + isEnterprise +
-                          '\n*Push Name: *' + pushName +
-                          '\n*Short name: *' + shortName;
+                          '\n*Groups in common:* ' + commonGroupsCount +
+                          '\n*Country Code:* ' + countryCode +
+                          '\n*Number (Formatted):* ' + number +
+                          '\m*User ID:* ' + id +
+                          '\n*Is Business:* ' + isBusiness +
+                          '\n*Is Enterprise:* ' + isEnterprise +
+                          '\n*Push Name:* ' + pushName +
+                          '\n*Short name:* ' + shortName;
 
                 const pfpMedia = undefined; //await await MessageMedia.fromUrl('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTvVloLUhK0N74Z76rkYtOM1S5n4a6436bMteyrjIQjkSWP96krl8WdIk&s=10', {unsafeMime: true});
                 if(pfpMedia == undefined)
