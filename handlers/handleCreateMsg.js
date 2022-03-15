@@ -359,14 +359,33 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             var chat = await msg.getChat();
             msg.delete(true);
             chat.delete();
-            const contact = await chat.getContact();
-            const pfp = await contact.getProfilePicUrl();
-            console.log('URL: ' + pfp + '\nABOUT: ' + contact.getAbout());
         } else if(msg.body == '!block') {
             var chat = await msg.getChat();
             const contact = await chat.getContact();
             if(contact != undefined && !contact.isBlocked)
                 await contact.block();
+        } else if(msg.body == '!userInfo') {
+            var chat = await msg.getChat();
+            const contact = await chat.getContact();
+            if(contact != undefined) {
+                const pfp = await contact.getProfilePicUrl();
+                const about = await contact.getAbout();
+                const commonGroupsCount = await contact.getCommonGroups().length;
+                const countryCode = await contact.getCountryCode();
+                const number = await contact.getFormattedNumber();
+                const id = await contact.id;
+                const isBusiness = await contact.isBusiness;
+                const isEnterprise = await contact.isEnterprise;
+                
+                msg.reply('*Profile Pic URL: *' + pfp +
+                          '*About: *' + about +
+                          '*Groups in common: *' + commonGroupsCount +
+                          '*Country Code: *' + countryCode +
+                          '*Number (Formatted): *' + number +
+                          '*User ID: *' + id +
+                          '*Is Business: *' + isBusiness +
+                          '*Is Enterprise: *' + isEnterprise);
+            }
         } else if(config.SELF_LOGS == "true") {
             var chat = await msg.getChat();
             const name = `${chat.isGroup ? `[GROUP] ${chat.name}`
