@@ -389,7 +389,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                           '\n*Push Name:* ' + pushName +
                           '\n*Short name:* ' + shortName;
 
-                const pfpMedia = await MessageMedia.fromUrl('https://via.placeholder.com/350x150.png');
+                const pfpMedia = await MessageMedia.fromUrl(pfp);
                 client.sendMessage(msg.to, pfpMedia, {caption: captionTxt});/*
                 if(pfpMedia == undefined)
                     msg.reply('*Profile Pic URL:* ' + pfp +
