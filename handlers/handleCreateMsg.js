@@ -104,12 +104,12 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                 const attachmentData = await quotedMsg.downloadMedia();
                 client.sendMessage(msg.from, attachmentData, { caption: 'Here\'s your requested media.' });
             }
-        } else if (msg.body.startsWith('!location ') && msg.body.split(' ').length >= 2) {
+        } else if (msg.body.startsWith('!location ') && msg.body.split(' ').length >= 3) {
             const latitude = parseFloat(msg.body.split(' ')[1]);
             const longitude = parseFloat(msg.body.split(' ')[2]);
             msg.delete(true);
-            if(msg.body.split(' ').length >= 3)
-                msg.reply(new Location(latitude, longitude, msg.body.substring( msg.body.indexOf(longitude.toString) + longitude.toString.length + 1, msg.body.length)));
+            if(msg.body.split(' ').length >= 4)
+                msg.reply(new Location(latitude, longitude, msg.body.substring( msg.body.indexOf(longitude.toString) + longitude.toString.length + 2, msg.body.length + 1)));
             else
                 msg.reply(new Location(latitude, longitude));
             console.log(msg.body.substring( msg.body.indexOf(longitude.toString) + longitude.toString.length + 1, msg.body.length));
