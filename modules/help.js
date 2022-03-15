@@ -25,6 +25,17 @@ const modulesList = [
     {name: 'archive', desc: 'Archive the chat', usage: '*Archive*\n\nMove the current chat to archived folder\n\n*!archive*'},
     {name: 'pin', desc: 'Pin the chat', usage: '*Pin*\n\nPin the current chat. Note: WhatsApp only allow 3 chats to be pinned\n\n*!pin*'},
     {name: 'status', desc: 'Update your status', usage: '*Status*\n\nUpdate your status, Status word limit is (139) characters\n\n*!status [text]'},
+    {name: 'location', desc: 'Send fake location', usage: '*Location*\n\nSend fake location based on longitude & latitude. Description is optional\n\n*!location (lat) (long) [Description: optional]*'},
+    {name: 'resendmedia', desc: 'Resend the quoted message media', usage: '*ResendMedia*\n\nResend the quoted message media to the same chat, All media cannot be downloaded so the command may not work\n\n*!resendmedia*'},
+    {name: 'chats', desc: 'Show number of all open chats', usage: '*Chats*\n\nShows the number of chats open of the owner account\n\n*!chats*'},
+    {name: 'mediainfo', desc: 'Information of the quoted media', usage: '*MediaInfo*\n\nShows the information of quoted media files\n\n*!mediainfo''},
+    {name: 'quoteinfo', desc: 'Information of the quoted message', usage: '*QuoteInfo*\n\nShows the information of the quoted message\n\n*!quoteinfo*'},
+    {name: 'groupinfo', desc: 'Information Of The Group', usage: '*GroupInfo*\n\nShows the information of the group, command must be used in a group\n\n*!groupinfo*'},
+    {name: 'join', desc: 'Join the group with invitation code', usage: '*Join*\n\nJoin the group directly with the invitation code\n\n*!join [code]*'},
+    {name: 'leave', desc: 'Leave the group', usage: '*Leave*\n\nLeave the group, command must be used in a group\n\n*!leave*'},
+    {name: 'sendto', desc: 'Send message directly to someone', usage: '*SendTo*\n\nSend message directly to given number with the message\n\n*!send to (number without +) [message]'},
+    {name: 'desc', desc: 'Change group description', usage: '*Description*\n\nChange group description, must be used in a group with permission to write group description\n\n*!desc [descriptionText]*'},
+    {name: 'ping', desc: 'Check if userbot is alive', usage: '*Ping*\n\nReply with message *PoNg* if userbot is running\n\n*!ping*'}
 ]
 
 const waHelp = async (text) => {
