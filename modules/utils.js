@@ -31,21 +31,7 @@ const unmute = async (chatId, client) => {
 const block = async (message) => {
     message.delete(true);
     const contact = await message.getContact();
-    console.log('🔹 '+contact.isBlocked);
-    if(!contact.isBlocked)
-        return contact.block();
-    else return true;
-    return true;
+    console.log('🔹 ' + await contact.block());
 }
 
-const unblock = async (message) => {
-    message.delete(true);
-    const contact = message.getChat().getContact();
-    console.log('🔹 '+contact.isBlocked);/*
-    if(contact.isBlocked)
-        return contact.unblock();
-    else return false;*/
-    return true;
-}
-
-module.exports = {mute, unmute, block, unblock}
+module.exports = {mute, unmute, block}
