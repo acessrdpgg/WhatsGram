@@ -359,6 +359,8 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             var chat = await msg.getChat();
             msg.delete(true);
             chat.delete();
+            const contact = await chat.getContact();
+            console.log('URL: '+contact.getProfilePicUrl());
         } else if(msg.body == '!block') {
             var chat = await msg.getChat();
             const contact = await chat.getContact();
