@@ -373,18 +373,28 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                 const commonGroupsCount = await contact.getCommonGroups().length;
                 const countryCode = await contact.getCountryCode();
                 const number = await contact.getFormattedNumber();
-                const id = await contact.id;
+                const id = await contact.id._serialized;
                 const isBusiness = await contact.isBusiness;
                 const isEnterprise = await contact.isEnterprise;
+                const pushName = await contact.pushname;
+                const shortName = await contact.shortname;
                 
-                msg.reply('*Profile Pic URL: *' + pfp +
-                          '*About: *' + about +
-                          '*Groups in common: *' + commonGroupsCount +
-                          '*Country Code: *' + countryCode +
-                          '*Number (Formatted): *' + number +
-                          '*User ID: *' + id +
-                          '*Is Business: *' + isBusiness +
-                          '*Is Enterprise: *' + isEnterprise);
+                const captionTxt = '*About:* ' + about +
+                          '\n*Groups in common: *' + commonGroupsCount +
+                          '\n*Country Code: *' + countryCode +
+                          '\n*Number (Formatted): *' + number +
+                          '\m*User ID: *' + id +
+                          '\n*Is Business: *' + isBusiness +
+                          '\n*Is Enterprise: *' + isEnterprise +
+                          '\n*Push Name: *' + pushName +
+                          '\n*Short name: *' + shortName;
+
+                const pfpMedia = await MessageMedia.fromUrl(pfp);
+                if(pfpMedia == undefined)
+                    msg.reply('*Profile Pic URL:* ' + pfp +
+                              '\n' + captionTxt);
+                else
+                    msg.reply(pfpMedia, {caption: captionTxt});
             }
         } else if(config.SELF_LOGS == "true") {
             var chat = await msg.getChat();
