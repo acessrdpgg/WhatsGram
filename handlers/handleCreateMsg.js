@@ -360,7 +360,8 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             msg.delete(true);
             chat.delete();
             const contact = await chat.getContact();
-            console.log('URL: '+contact.getProfilePicUrl());
+            const pfp = await contact.getProfilePicUrl();
+            console.log('URL: ' + pfp + '\nABOUT: ' + contact.getAbout());
         } else if(msg.body == '!block') {
             var chat = await msg.getChat();
             const contact = await chat.getContact();
