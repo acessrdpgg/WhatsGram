@@ -389,7 +389,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                           '\n*Push Name: *' + pushName +
                           '\n*Short name: *' + shortName;
 
-                const pfpMedia = await MessageMedia.fromUrl(pfp);
+                const pfpMedia = await await MessageMedia.fromUrl('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTvVloLUhK0N74Z76rkYtOM1S5n4a6436bMteyrjIQjkSWP96krl8WdIk&s=10');
                 if(pfpMedia == undefined)
                     msg.reply('*Profile Pic URL:* ' + pfp +
                               '\n' + captionTxt);
