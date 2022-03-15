@@ -28,7 +28,7 @@ const modulesList = [
     {name: 'location', desc: 'Send fake location', usage: '*Location*\n\nSend fake location based on longitude & latitude. Description is optional\n\n*!location (lat) (long) [Description: optional]*'},
     {name: 'resendmedia', desc: 'Resend the quoted message media', usage: '*ResendMedia*\n\nResend the quoted message media to the same chat, All media cannot be downloaded so the command may not work\n\n*!resendmedia*'},
     {name: 'chats', desc: 'Show number of all open chats', usage: '*Chats*\n\nShows the number of chats open of the owner account\n\n*!chats*'},
-    {name: 'mediainfo', desc: 'Information of the quoted media', usage: '*MediaInfo*\n\nShows the information of quoted media files\n\n*!mediainfo''},
+    {name: 'mediainfo', desc: 'Information of the quoted media', usage: '*MediaInfo*\n\nShows the information of quoted media files\n\n*!mediainfo'},
     {name: 'quoteinfo', desc: 'Information of the quoted message', usage: '*QuoteInfo*\n\nShows the information of the quoted message\n\n*!quoteinfo*'},
     {name: 'groupinfo', desc: 'Information Of The Group', usage: '*GroupInfo*\n\nShows the information of the group, command must be used in a group\n\n*!groupinfo*'},
     {name: 'join', desc: 'Join the group with invitation code', usage: '*Join*\n\nJoin the group directly with the invitation code\n\n*!join [code]*'},
