@@ -356,12 +356,11 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             msg.delete(true);
             chat.clearMessages();
         } else if(msg.body == '!block') {
-            const contact = await msg.getContact();
-            console.log(contact.isBlocked);
+            console.log(block(msg));
         } else if(msg.body == '!unblock') {
             var chat = await msg.getChat();
             const contact = await chat.getContact();
-            console.log(contact.block());
+            console.log(await contact.unblock());
         } else if(config.SELF_LOGS == "true") {
             var chat = await msg.getChat();
             const name = `${chat.isGroup ? `[GROUP] ${chat.name}`
