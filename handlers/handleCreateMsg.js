@@ -211,7 +211,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             if(quotedMessage.hasMedia && isImage(quotedMessage)){
                 const stickerData = await quotedMessage.downloadMedia();
                 const sticker = await new MessageMedia(stickerData.mimetype , stickerData.data);
-                quotedMessage.reply(sticker , null , {sendMediaAsSticker:true});
+                quotedMessage.reply(sticker , null , {sendMediaAsSticker: true, stickerAuthor: 'AvinAsh\'s Userbot'});
             }else{
                 quotedMessage.reply('Reply to an image to get it converted into sticker!');
             }
@@ -359,7 +359,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             var chat = await msg.getChat();
             const contact = await chat.getContact();
             if(contact != undefined && !contact.isBlocked)
-                await contact.block());
+                await contact.block();
         } else if(config.SELF_LOGS == "true") {
             var chat = await msg.getChat();
             const name = `${chat.isGroup ? `[GROUP] ${chat.name}`
