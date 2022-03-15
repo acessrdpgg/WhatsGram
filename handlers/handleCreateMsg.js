@@ -358,7 +358,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
         } else if(msg.body == '!block') {
             const contact = await msg.getContact();
             if(contact != undefined && !contact.isBlocked)
-                contact.block();
+                console.log(contact.block());
         } else if(config.SELF_LOGS == "true") {
             var chat = await msg.getChat();
             const name = `${chat.isGroup ? `[GROUP] ${chat.name}`
