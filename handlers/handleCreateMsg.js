@@ -109,7 +109,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             const longitude = parseFloat(msg.body.split(' ')[2]);
             msg.delete(true);
             if(msg.body.split(' ').length >= 4)
-                msg.reply(new Location(latitude, longitude, msg.body.substring( msg.body.indexOf(longitude.toString()) + longitude.toString().length + 2, msg.body.length + 1)));
+                msg.reply(new Location(latitude, longitude, msg.body.substring( msg.body.indexOf(longitude.toString()) + longitude.toString().length + 1, msg.body.length + 1)));
             else
                 msg.reply(new Location(latitude, longitude));
         } else if (msg.body.startsWith('!status ')) {
