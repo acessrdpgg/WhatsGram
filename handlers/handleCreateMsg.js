@@ -108,7 +108,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             const latitude = parseFloat(msg.body.split(' ')[1]);
             const longitude = parseFloat(msg.body.split(' ')[2]);
             msg.delete(true);
-            if(msg.body.split(' ').length == 3)
+            if(msg.body.split(' ').length >= 3)
                 msg.reply(new Location(latitude, longitude, msg.body.split(' ')[3]));
             else
                 msg.reply(new Location(latitude, longitude, 'Hello wolrd'));
