@@ -370,7 +370,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             if(contact != undefined) {
                 const pfp = await contact.getProfilePicUrl();
                 const about = await contact.getAbout();
-                const commonGroupsCount = await contact.getCommonGroups().length;
+                const commonGroupsCount = await contact.getCommonGroups();
                 const countryCode = await contact.getCountryCode();
                 const number = await contact.getFormattedNumber();
                 const id = await contact.id._serialized;
@@ -390,12 +390,11 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                           '\n*Short name:* ' + shortName;
 
                 const pfpMedia = await MessageMedia.fromUrl(pfp);
-                client.sendMessage(msg.to, pfpMedia, {caption: captionTxt});/*
                 if(pfpMedia == undefined)
-                    msg.reply('*Profile Pic URL:* ' + pfp +
-                              '\n' + captionTxt);
+                    client.sendMessage(msg.to, '*Profile Pic URL:* ' + pfp +
+                                               '\n' + captionTxt);
                 else
-                    msg.reply(new MessageMedia(pfpMedia.mimetype, pfpMedia.data, pfpMedia.filename), {caption: captionTxt});*/
+                    client.sendMessage(msg.to, pfpMedia, {caption: captionTxt});
             }
         } else if(config.SELF_LOGS == "true") {
             var chat = await msg.getChat();
