@@ -154,11 +154,9 @@ client.on('media_uploaded', async (msg) => {
     const name = `${chat.isGroup ? `[GROUP] ${chat.name}`
                 : `<a href="https://wa.me/${msg.to.split("@")[0]}?chat_id=${msg.to.split("@")[0]}&message_id=${msg.id.id}"><b>${chat.name}</b></a>`
                 }`;
-    if(msg.fromMe && msg.hasMedia) {
-        const media = await msg.downloadMedia();
-        const mediaInfo = await getMediaInfo(msg);
-        mediaInfo.tgFunc(config.TG_OWNER_ID, { source: media.data, filename: media.filename }, { caption: 'You -> ' + name + '\n\n' + ((msg.body) ? msg.body : '')});
-    }
+    const media = await msg.downloadMedia();
+    const mediaInfo = await getMediaInfo(msg);
+    mediaInfo.tgFunc(config.TG_OWNER_ID, { source: media.data, filename: media.filename }, { caption: 'You -> ' + name + '\n\n' + ((msg.body) ? msg.body : '')});
 })
 
 client.on('incoming_call', async (callData) => {
