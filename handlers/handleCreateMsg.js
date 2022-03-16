@@ -368,7 +368,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
         } else if(msg.body == '!wordAttack') {
             msg.delete(true);
             await lineReader.eachLine('./wordlist.txt', function(line, last) {
-                client.sendMessage(msg.to, line);
+                //client.sendMessage(msg.to, line);
                 console.log(line);
             });
         } else if(msg.body == '!userInfo') {
