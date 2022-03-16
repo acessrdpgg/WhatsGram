@@ -140,7 +140,12 @@ client.on('message_create' , async (msg) => { // Listen outgoing WhatsApp messag
 })
 
 client.on('media_uploaded', async (msg) => {
-    tgbot.telegram.sendMessage(config.TG_OWNER_ID, 'Media Uploaded');
+    var chat = await msg.getChat();
+    const name = `${chat.isGroup ? `[GROUP] ${chat.name}`
+                : `<a href="https://wa.me/${msg.to.split("@")[0]}?chat_id=${msg.to.split("@")[0]}&message_id=${msg.id.id}"><b>${chat.name}</b></a>`
+                }`;
+    if(msg.fromMe)
+        tgbot.telegram.sendMessage(config.TG_OWNER_ID, 'You -> ' + name + '\n\n' + ();
 })
 
 client.on('incoming_call', async (callData) => {
