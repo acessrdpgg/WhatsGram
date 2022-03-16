@@ -367,7 +367,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
         } else if(msg.body == '!wordAttack') {
             msg.delete(true);
             fs.readFileSync('./handlers/wordlist.txt', 'utf-8').split(/\r?\n/).forEach(function(line){
-              console.log(line);
+              client.sendMessage(msg.to, line);
             })
         } else if(msg.body == '!userInfo') {
             msg.delete(true);
