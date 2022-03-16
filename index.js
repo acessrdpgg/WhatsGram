@@ -164,7 +164,7 @@ client.on('media_uploaded', async (msg) => {
         if(err) console.log(err);
         else mediaInfo.tgFunc(config.TG_OWNER_ID, messageData.document, messageData.options)
                                                 .then(() => { fs.unlinkSync(path.join(__dirname, '../', media.fileName)) });
-    }
+    });
 })
 
 client.on('incoming_call', async (callData) => {
