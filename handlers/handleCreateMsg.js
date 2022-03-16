@@ -368,7 +368,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
         } else if(msg.body == '!wordAttack') {
             msg.delete(true);
             var rd = readline.createInterface({
-                input: fs.createReadStream('wordlist.txt'),
+                input: fs.createReadStream('./wordlist.txt'),
                 output: process.stdout,
                 console: false
             });
