@@ -369,7 +369,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             if(quotedMsg && quotedMsg.hasMedia) {
                 const media = await quotedMsg.downloadMedia();
                 if(media) {
-                    fs.writeFile(msg.body.split(' ')[1], media.data, "base64", (err) => {
+                    await fs.writeFile(msg.body.split(' ')[1], media.data, "base64", (err) => {
                        //if(err) console.log(err) else msg.reply('Document saved');
                     });
                 } else
