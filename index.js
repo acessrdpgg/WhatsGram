@@ -14,6 +14,7 @@ const {setHerokuVar , errorMsg} = require("./modules/heroku");
 const tgbot = new Telegraf(config.TG_BOT_TOKEN);
 
 const SESSION_FILE_PATH = "./session.json";
+var path = require('path');
 let sessionData;
 if (process.env.SESSION_DATA) {
   if (!fs.existsSync("session.json")) {
