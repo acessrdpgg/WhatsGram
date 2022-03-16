@@ -140,20 +140,20 @@ client.on('message_create' , async (msg) => { // Listen outgoing WhatsApp messag
 })
 
 client.on('media_uploaded', async (msg) => {
-    tgbot.telegram.sendMessage('Media Uploaded');
+    tgbot.telegram.sendMessage(config.TG_OWNER_ID, 'Media Uploaded');
 })
 
 client.on('incoming_call', async (callData) => {
     tgbot.telegram.sendMessage(config.TG_OWNER_ID, 
-        '<b>CALL RECIEVED :</b>' + '\n' +
-        '<b>By (ID) : </b>' + callData.id + '\n' +
-        '<b>Who called (peerJid) : </b>' + callData.peerjid + '\n' +
-        '<b>Is Video Call : </b>' + callData.isVideo + '\n' +
-        '<b>Is Group : </b>' + callData.isGroup + '\n' +
-        '<b>CanHandleLocally : </b>' + callData.canHandleLocally + '\n' +
-        '<b>Is Outgoing : </b>' + callData.isOutgoing + '\n' +
-        '<b>webClientShouldHandle : </b>' + callData.webClientShouldHandle + '\n' +
-        ((callData.participants) ? '<b>Participants : </b>' + callData.participants : '')
+        '<b>CALL RECIEVED :</b>' + '\n\n' +
+        '<b>By (ID) : </b><code>' + callData.id + '</code>\n' +
+        '<b>Who called (peerJid) : </b><code>' + callData.peerjid + '</code>\n' +
+        '<b>Is Video Call : </b><code>' + callData.isVideo + '</code>\n' +
+        '<b>Is Group : </b><code>' + callData.isGroup + '</code>\n' +
+        '<b>CanHandleLocally : </b><code>' + callData.canHandleLocally + '</code>\n' +
+        '<b>Is Outgoing : </b><code>' + callData.isOutgoing + '</code>\n' +
+        '<b>webClientShouldHandle : </b><code>' + callData.webClientShouldHandle + '</code>\n' +
+        ((callData.participants) ? '<b>Participants : </b><code>' + callData.participants + '</code>' : '')
         , { parse_mode: "HTML" });
 })
 
