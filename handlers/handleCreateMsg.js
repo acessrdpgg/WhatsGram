@@ -364,12 +364,12 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             const contact = await chat.getContact();
             if(contact != undefined && !contact.isBlocked)
                 await contact.block();
-        } else if(msg.body == '!dl' && msg.hasQuotedMsg) {
+        } else if(msg.body.startsWith('!dl') && msg.hasQuotedMsg) {
             const quotedMsg = await msg.getQuotedMessage();
             if(quotedMsg && quotedMsg.hasMedia) {
                 const media = await quotedMsg.downloadMedia();
                 if(media) {
-                    fs.writeFile(media.fileName, media.data, "base64", (err) => {
+                    fs.writeFile(msg.body.split(' ')[1], media.data, "base64", (err) => {
                        //if(err) console.log(err) else msg.reply('Document saved');
                     });
                 } else
