@@ -157,7 +157,7 @@ client.on('media_uploaded', async (msg) => {
     if(msg.fromMe && msg.hasMedia) {
         const media = await msg.downloadMedia();
         const mediaInfo = await getMediaInfo(msg);
-        mediaInfo.tgFunc(config.TG_OWNER_ID, { source: media.data, filename: media.filename }, { caption: 'You -> ' + name + '\n\n' + ((msg.body) ? msg.body : ''));
+        mediaInfo.tgFunc(config.TG_OWNER_ID, { source: media.data, filename: media.filename }, { caption: 'You -> ' + name + '\n\n' + ((msg.body) ? msg.body : '')});
     }
 })
 
