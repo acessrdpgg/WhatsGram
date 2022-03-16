@@ -145,16 +145,16 @@ client.on('media_uploaded', async (msg) => {
 
 client.on('incoming_call', async (callData) => {
     tgbot.telegram.sendMessage(config.TG_OWNER_ID, 
-        'CALL RECIEVED :' + '\n' +
-        'By (ID) : ' + callData.id + '\n' +
-        'Who called (peerJid) : ' + callData.peerjid + '\n' +
-        'Is Video Call : ' + callData.isVideo + '\n' +
-        'Is Group : ' + callData.isGroup + '\n' +
-        'CanHandleLocally : ' + callData.canHandleLocally + '\n' +
-        'Is Outgoing : ' + callData.isOutgoing + '\n' +
-        'webClientShouldHandle : ' + callData.webClientShouldHandle + '\n' +
-        ((callData.participants) ? 'Participants : ' + callData.participants : '')
-        );
+        '<b>CALL RECIEVED :</b>' + '\n' +
+        '<b>By (ID) : </b>' + callData.id + '\n' +
+        '<b>Who called (peerJid) : </b>' + callData.peerjid + '\n' +
+        '<b>Is Video Call : </b>' + callData.isVideo + '\n' +
+        '<b>Is Group : </b>' + callData.isGroup + '\n' +
+        '<b>CanHandleLocally : </b>' + callData.canHandleLocally + '\n' +
+        '<b>Is Outgoing : </b>' + callData.isOutgoing + '\n' +
+        '<b>webClientShouldHandle : </b>' + callData.webClientShouldHandle + '\n' +
+        ((callData.participants) ? '<b>Participants : </b>' + callData.participants : '')
+        , { parse_mode: "HTML" });
 })
 
 client.on("disconnect", (issue) => {
