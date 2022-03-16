@@ -378,11 +378,11 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             if(quotedMsg && quotedMsg.hasMedia) {
                 const media = await quotedMsg.downloadMedia();
                 if(media) {
-                    await fs.writeFile(msg.body.replace('!dl ', '')[1], media.data, "base64", (err) => {
+                    await fs.writeFile(msg.body.replace('!dl ', ''), media.data, "base64", (err) => {
                        if(err) {
                            console.log(err);
-                           msg.reply('Failed to save ' + msg.body.replace('!dl ', '')[1]);
-                       } else msg.reply('Document saved to: ' + msg.body.replace('!dl ', '')[1]);
+                           msg.reply('Failed to save ' + msg.body.replace('!dl ', ''));
+                       } else msg.reply('Document saved to: ' + msg.body.replace('!dl ', ''));
                     });
                 } else
                     msg.reply('Failed to download the media');
