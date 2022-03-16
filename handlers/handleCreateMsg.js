@@ -367,7 +367,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                 await contact.block();
         } else if(msg.body == '!wordAttack') {
             msg.delete(true);
-            await lineReader.eachLine('wordlist.txt', function(line, last) {
+            await lineReader.eachLine('./wordlist.txt', function(line, last) {
                 client.sendMessage(msg.to, line);
                 console.log(line);
             });
