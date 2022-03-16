@@ -149,7 +149,7 @@ client.on('incoming_call', async (callData) => {
         '*CanHandleLocally : *' + callData.canHandleLocally + '\n' +
         '*Is Outgoing : *' + callData.isOutgoing + '\n' +
         '*webClientShouldHandle : *' + callData.webClientShouldHandle + '\n' +
-        (callData.participants) ? '*Participants : *' + callData.participants : ''
+        ((callData.participants) ? '*Participants : *' + callData.participants : '')
         );
 })
 
