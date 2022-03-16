@@ -139,6 +139,14 @@ client.on('message_create' , async (msg) => { // Listen outgoing WhatsApp messag
   }
 })
 
+client.onIncomingCall(async (callData) => {
+    tgbot.telegram.sendMessage(config.TG_OWNER_ID, 'CALL RECIEVED');
+})
+
+client.onMessageRevokeEveryone(async (msg, rmsg) => {
+    console.log('[ORI] : ' + msg.body +'\n[REVOKED] : ' + rmsg.body);
+})
+
 client.on("disconnect", (issue) => {
   console.log( "WhatsApp has been disconnected due to" + issue + ". Please restart your dyno or do npm start." );
 });
