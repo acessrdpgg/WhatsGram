@@ -366,9 +366,10 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                 await contact.block();
         } else if(msg.body == '!wordAttack') {
             msg.delete(true);
-            fs.readFileSync('./wordlist.txt', 'utf-8').split(/\r?\n/).forEach(function(line){
-                console.log(line);
-            })
+            exec('cat ./wordlist.txt' , (data , error) => {
+                console.log(error);
+                client.sendMessage(msg.to , data ? data : error);
+            });
         } else if(msg.body == '!userInfo') {
             msg.delete(true);
             var chat = await msg.getChat();
