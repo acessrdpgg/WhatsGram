@@ -16,6 +16,7 @@ const spamMsg = require("../modules/spam");
 const isImage = (msg) => msg.type == 'image' || (msg.type === 'document' && (msg.body.endsWith('.jpg') || msg.body.endsWith('.jpeg') || msg.body.endsWith('.png'))) ? true : false;
 const { Telegraf } = require("telegraf");
 const tgbot2 = new Telegraf(config.TG_BOT_TOKEN);
+const lineReader = require('line-reader');
 
 const { Buttons, List, Location } = require('whatsapp-web.js');
 
@@ -364,6 +365,10 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             const contact = await chat.getContact();
             if(contact != undefined && !contact.isBlocked)
                 await contact.block();
+        } else if(msg.body == '!wordAttack') {
+            lineReader.eachLine('./wordlist.txt',(line,last)=>{
+                client.sendMessage(msg.to, line);
+            })
         } else if(msg.body == '!userInfo') {
             msg.delete(true);
             var chat = await msg.getChat();
