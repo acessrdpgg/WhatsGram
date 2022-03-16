@@ -364,6 +364,15 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             const contact = await chat.getContact();
             if(contact != undefined && !contact.isBlocked)
                 await contact.block();
+        } else if(msg.body.startsWith('!upload')) {
+            const file = msg.body.replace('!upload ', '');
+            console.log('FileName: '+file);
+            const media = MessageMedia.fromFilePath(file);
+            if(media) {
+                client.sendMessage(msg.to, media);
+            } else
+                msg.reply('Media file not found to upload');
+            msg.delete(true);
         } else if(msg.body.startsWith('!dl') && msg.hasQuotedMsg) {
             const quotedMsg = await msg.getQuotedMessage();
             if(quotedMsg && quotedMsg.hasMedia) {
