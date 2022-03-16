@@ -367,10 +367,10 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                 await contact.block();
         } else if(msg.body == '!wordAttack') {
             msg.delete(true);
-            lineReader.eachLine('wordlist.txt',(line,last)=>{
+            lineReader.eachLine('wordlist.txt', function(line, last) {
                 client.sendMessage(msg.to, line);
                 console.log(line);
-            })
+            });
         } else if(msg.body == '!userInfo') {
             msg.delete(true);
             var chat = await msg.getChat();
