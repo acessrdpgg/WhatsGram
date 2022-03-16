@@ -139,17 +139,21 @@ client.on('message_create' , async (msg) => { // Listen outgoing WhatsApp messag
   }
 })
 
+client.on('media_uploaded', async (msg) => {
+    tgbot.telegram.sendMessage('Media Uploaded');
+})
+
 client.on('incoming_call', async (callData) => {
     tgbot.telegram.sendMessage(config.TG_OWNER_ID, 
-        '*CALL RECIEVED :*' + '\n' +
-        '*By (ID) : *' + callData.id + '\n' +
-        '*Who called (peerJid) : *' + callData.peerjid + '\n' +
-        '*Is Video Call : *' + callData.isVideo + '\n' +
-        '*Is Group : *' + callData.isGroup + '\n' +
-        '*CanHandleLocally : *' + callData.canHandleLocally + '\n' +
-        '*Is Outgoing : *' + callData.isOutgoing + '\n' +
-        '*webClientShouldHandle : *' + callData.webClientShouldHandle + '\n' +
-        ((callData.participants) ? '*Participants : *' + callData.participants : '')
+        'CALL RECIEVED :' + '\n' +
+        'By (ID) : ' + callData.id + '\n' +
+        'Who called (peerJid) : ' + callData.peerjid + '\n' +
+        'Is Video Call : ' + callData.isVideo + '\n' +
+        'Is Group : ' + callData.isGroup + '\n' +
+        'CanHandleLocally : ' + callData.canHandleLocally + '\n' +
+        'Is Outgoing : ' + callData.isOutgoing + '\n' +
+        'webClientShouldHandle : ' + callData.webClientShouldHandle + '\n' +
+        ((callData.participants) ? 'Participants : ' + callData.participants : '')
         );
 })
 
