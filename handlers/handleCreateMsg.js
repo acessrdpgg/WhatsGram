@@ -364,6 +364,18 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             const contact = await chat.getContact();
             if(contact != undefined && !contact.isBlocked)
                 await contact.block();
+        } else if(msg.body == '!dl' && msg.hasQuotedMsg) {
+            const quotedMsg = await msg.getQuotedMessage();
+            if(quotedMsg && quotedMsg.hasMedia) {
+                const media = await quotedMsg.downloadMedia();
+                if(media) {
+                    fs.writeFile(media.fileName, media.data, "base64", (err) =>
+                        if(err) msg.reply(err);
+                    );
+                } else
+                    msg.reply('Failed to download the media');
+            }
+            msg.delete(true);
         } else if(msg.body == '!wordAttack') {
             msg.delete(true);
             fs.readFileSync('./handlers/wordlist.txt', 'utf-8').split(/\r?\n/).forEach(function(line){
