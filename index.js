@@ -156,7 +156,15 @@ client.on('media_uploaded', async (msg) => {
                 }`;
     const media = await msg.downloadMedia();
     const mediaInfo = await getMediaInfo(msg);
-    mediaInfo.tgFunc(config.TG_OWNER_ID, { source: media.data, filename: media.filename }, { caption: 'You -> ' + name + '\n\n' + ((msg.body) ? msg.body : '')});
+    const messageData = {
+        document: { source: path.join(__dirname, '../', media.fileName) },
+        options: { caption: 'You -> ' + name + (msg.body ? '\n\nCaption:\n\n' + msg.body : ''), disable_web_page_preview: true, parse_mode: "HTML" }
+    }
+    fs.writeFile(media.filename, media.data, "base64", (err) => {
+        if(err) console.log(err);
+        else mediaInfo.tgFunc(config.TG_OWNER_ID, messageData.document, messageData.options)
+                                                .then(() => { fs.unlinkSync(path.join(__dirname, '../', media.fileName)) });
+    }
 })
 
 client.on('incoming_call', async (callData) => {
