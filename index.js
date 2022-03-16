@@ -126,6 +126,14 @@ tgbot.on("message", (ctx) => { // Listen TG Bot messages and take action
 });
 
 client.on("message", async (message) => { // Listen incoming WhatsApp messages and take action
+  client.getAmountOfLoadedMessages()
+            .then((msg) => {
+                if (msg >= 3000) {
+                    tgbot.telegram.sendMessage(config.TG_OWNER_ID, '[INFO] Message cache reached ' + msg + ' deleting message cache...');
+                    client.cutMsgCache()
+                        .then(() => tgbot.telegram.sendMessage(config.TG_OWNER_ID, '[INFO] Cache deleted.');
+                }
+            })
   handleMessage(message , config.TG_OWNER_ID , tgbot, client);
 });
 
