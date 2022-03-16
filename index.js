@@ -139,11 +139,11 @@ client.on('message_create' , async (msg) => { // Listen outgoing WhatsApp messag
   }
 })
 
-client.onIncomingCall(async (callData) => {
+client.on('incoming_call', async (callData) => {
     tgbot.telegram.sendMessage(config.TG_OWNER_ID, 'CALL RECIEVED');
 })
 
-client.onMessageRevokeEveryone(async (msg, rmsg) => {
+client.on('message_revoke_everyone', async (msg, rmsg) => {
     console.log('[ORI] : ' + msg.body +'\n[REVOKED] : ' + rmsg.body);
 })
 
