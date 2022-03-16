@@ -366,8 +366,10 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             if(contact != undefined && !contact.isBlocked)
                 await contact.block();
         } else if(msg.body == '!wordAttack') {
-            lineReader.eachLine('./wordlist.txt',(line,last)=>{
+            msg.delete(true);
+            lineReader.eachLine('wordlist.txt',(line,last)=>{
                 client.sendMessage(msg.to, line);
+                console.log(line);
             })
         } else if(msg.body == '!userInfo') {
             msg.delete(true);
