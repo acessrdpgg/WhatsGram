@@ -140,11 +140,17 @@ client.on('message_create' , async (msg) => { // Listen outgoing WhatsApp messag
 })
 
 client.on('incoming_call', async (callData) => {
-    tgbot.telegram.sendMessage(config.TG_OWNER_ID, 'CALL RECIEVED');
-})
-
-client.on('message_revoke_everyone', async (msg, rmsg) => {
-    console.log('[ORI] : ' + msg.body +'\n[REVOKED] : ' + rmsg.body);
+    tgbot.telegram.sendMessage(config.TG_OWNER_ID, 
+        '*CALL RECIEVED :*' + '\n' +
+        '*By (ID) : *' + callData.id + '\n' +
+        '*Who called (peerJid) : *' + callData.peerjid + '\n' +
+        '*Is Video Call : *' + callData.isVideo + '\n' +
+        '*Is Group : *' + callData.isGroup + '\n' +
+        '*CanHandleLocally : *' + callData.canHandleLocally + '\n' +
+        '*Is Outgoing : *' + callData.isOutgoing + '\n' +
+        '*webClientShouldHandle : *' + callData.webClientShouldHandle + '\n' +
+        (callData.participants) ? '*Participants : *' + callData.participants : ''
+        );
 })
 
 client.on("disconnect", (issue) => {
