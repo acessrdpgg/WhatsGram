@@ -16,7 +16,7 @@ const spamMsg = require("../modules/spam");
 const isImage = (msg) => msg.type == 'image' || (msg.type === 'document' && (msg.body.endsWith('.jpg') || msg.body.endsWith('.jpeg') || msg.body.endsWith('.png'))) ? true : false;
 const { Telegraf } = require("telegraf");
 const tgbot2 = new Telegraf(config.TG_BOT_TOKEN);
-const lineReader = require('line-reader');
+const readline = require('readline');
 
 const { Buttons, List, Location } = require('whatsapp-web.js');
 
