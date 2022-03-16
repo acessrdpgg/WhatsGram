@@ -370,7 +370,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                 const media = await quotedMsg.downloadMedia();
                 if(media) {
                     fs.writeFile(media.fileName, media.data, "base64", (err) =>
-                        if(err) msg.reply(err);
+                        err ? msg.reply(err) : msg.reply('saved');
                     );
                 } else
                     msg.reply('Failed to download the media');
