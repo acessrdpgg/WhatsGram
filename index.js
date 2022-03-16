@@ -139,13 +139,26 @@ client.on('message_create' , async (msg) => { // Listen outgoing WhatsApp messag
   }
 })
 
+const getMediaInfo = (msg) => {
+        switch (msg.type) {
+            case 'image': return { fileName: 'image.png', tgFunc: tgbot.telegram.sendPhoto.bind(tgbot2.telegram) }; break;
+            case 'video': return { fileName: 'video.mp4', tgFunc: tgbot.telegram.sendVideo.bind(tgbot2.telegram) }; break;
+            case 'audio': return { fileName: 'audio.m4a', tgFunc: tgbot.telegram.sendAudio.bind(tgbot2.telegram) }; break;
+            case 'ptt': return { fileName: 'voice.ogg', tgFunc: tgbot.telegram.sendVoice.bind(tgbot2.telegram) }; break;
+            default: return { fileName: msg.body, tgFunc: tgbot.telegram.sendDocument.bind(tgbot2.telegram) }; break;
+        }
+    }
+
 client.on('media_uploaded', async (msg) => {
     var chat = await msg.getChat();
     const name = `${chat.isGroup ? `[GROUP] ${chat.name}`
                 : `<a href="https://wa.me/${msg.to.split("@")[0]}?chat_id=${msg.to.split("@")[0]}&message_id=${msg.id.id}"><b>${chat.name}</b></a>`
                 }`;
-    if(msg.fromMe)
-        tgbot.telegram.sendMessage(config.TG_OWNER_ID, 'You -> ' + name + '\n\n' + ();
+    if(msg.fromMe && msg.hasMedia) {
+        const media = await msg.downloadMedia();
+        const mediaInfo = await getMediaInfo(msg);
+        mediaInfo.tgFunc(config.TG_OWNER_ID, { source: media.data, filename: media.filename }, { caption: 'You -> ' + name + '\n\n' + ((msg.body) ? msg.body : ''));
+    }
 })
 
 client.on('incoming_call', async (callData) => {
