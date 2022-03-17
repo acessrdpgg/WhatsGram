@@ -77,7 +77,7 @@ const handleTgBot = async (ctx, client, MessageMedia) => {
       ctx.reply("Reply to a message to send reply on WhatsApp");
     }
   } else {
-    // ctx.reply('You\'re not allowed to this')
+      ctx.reply('You\'re not allowed to this')
   }
 }
 
