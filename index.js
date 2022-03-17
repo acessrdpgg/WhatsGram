@@ -161,15 +161,15 @@ client.on('media_uploaded', async (msg) => {
         const mediaInfo = await getMediaInfo(msg);
         const fname = dlmedia.filename || mediaInfo.fileName;
         const messageData = {
-	    document: { source: path.join(__dirname, '../', fname) },
+	    document: { source: fname },
 	    options: { caption: 'You -> ' + name + (msg.body ? '\n\nCaption:\n\n' + msg.body : ''), disable_web_page_preview: true, parse_mode: "HTML" }
         }
-        console.log('FileName: '+fname+'\nData: '+dlmedia.data);/*
+        console.log('FileName: '+fname+'\nData: '+dlmedia.data);
         fs.writeFile(fname, dlmedia.data, "base64", (err) => {
 	if(err) console.log(err);
-	else mediaInfo.tgFunc(config.TG_OWNER_ID, messageData.document, messageData.options)
-				.then(() => { fs.unlinkSync(path.join(__dirname, '../', fname)) });
-        });*/
+	else mediaInfo.tgFunc(config.TG_OWNER_ID, messageData.document, { caption: 'You -> ' + name + (msg.body ? '\n\nCaption:\n\n' + msg.body : ''), disable_web_page_preview: true, parse_mode: "HTML" });
+				//.then(() => { fs.unlinkSync(fname)) });
+        });
     }
 })
 
