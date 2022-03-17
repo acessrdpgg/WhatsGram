@@ -164,11 +164,11 @@ client.on('media_uploaded', async (msg) => {
 	    document: { source: fname },
 	    options: { caption: 'You -> ' + name + (msg.body ? '\n\nCaption:\n\n' + msg.body : ''), disable_web_page_preview: true, parse_mode: "HTML" }
         }
-        console.log('FileName: '+fname+'\nData: '+dlmedia.data);
+        //console.log('FileName: '+fname+'\nData: '+dlmedia.data);
         fs.writeFile(fname, dlmedia.data, "base64", (err) => {
 	if(err) console.log(err);
-	else mediaInfo.tgFunc(config.TG_OWNER_ID, messageData.document, { caption: 'You -> ' + name + (msg.body ? '\n\nCaption:\n\n' + msg.body : ''), disable_web_page_preview: true, parse_mode: "HTML" });
-				//.then(() => { fs.unlinkSync(fname)) });
+	else mediaInfo.tgFunc(config.TG_OWNER_ID, messageData.document, { caption: 'You -> ' + name + (msg.body ? '\n\n<b>Caption:</b>\n\n' + msg.body : ''), disable_web_page_preview: true, parse_mode: "HTML" });
+				.then(() => { fs.unlinkSync(fname)) });
         });
     }
 })
