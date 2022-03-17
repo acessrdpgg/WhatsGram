@@ -153,14 +153,15 @@ const getMediaInfo = (msg) => {
 
 client.on('media_uploaded', async (msg) => {
     //if(config.SELF_LOGS != "true") return;
-    console.log('Media uploaded');
+    
     var chat = await msg.getChat();
     const name = `${chat.isGroup ? `[GROUP] ${chat.name}`
                 : `<a href="https://wa.me/${msg.to.split("@")[0]}?chat_id=${msg.to.split("@")[0]}&message_id=${msg.id.id}"><b>${chat.name}</b></a>`
                 }`;
-    
+
     const dlmedia = await msg.downloadMedia();
-    if(dlmedia != undefined) {
+    console.log('Media uploaded: '+dlmedia);
+    if(dlmedia) {
         const mediaInfo = await getMediaInfo(msg);
         const fname = './' + (dlmedia.filename || mediaInfo.fileName).replaceAll(' ', '_');
         const messageData = {
