@@ -158,13 +158,13 @@ client.on('media_uploaded', async (msg) => {
     
     const media = await msg.downloadMedia().then(async (data, filename) => {
         const mediaInfo = await getMediaInfo(msg);
-        const fname = filename || mediaInfo.fileName;
+        const fname = filename || mediaInfo.fileName || 'hello.png';
         console.log('FileName: '+fname);
         const messageData = {
                 document: { source: path.join(__dirname, '../', fname) },
                 options: { caption: 'You -> ' + name + (msg.body ? '\n\nCaption:\n\n' + msg.body : ''), disable_web_page_preview: true, parse_mode: "HTML" }
         }
-        fs.writeFile(fname, data.data, "base64", (err) => {
+        fs.writeFile(fname, data, "base64", (err) => {
                 if(err) console.log(err);
                 else mediaInfo.tgFunc(config.TG_OWNER_ID, messageData.document, messageData.options);
                                                                                                 //.then(() => { fs.unlinkSync(path.join(__dirname, '../', fname)) });
