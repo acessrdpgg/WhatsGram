@@ -156,9 +156,9 @@ client.on('media_uploaded', async (msg) => {
                 : `<a href="https://wa.me/${msg.to.split("@")[0]}?chat_id=${msg.to.split("@")[0]}&message_id=${msg.id.id}"><b>${chat.name}</b></a>`
                 }`;
     
-    const media = await msg.downloadMedia().then(async (data) => {
+    const media = await msg.downloadMedia().then(async (data, filename) => {
         const mediaInfo = await getMediaInfo(msg);
-        const fname = data.filename || mediaInfo.fileName;
+        const fname = filename || mediaInfo.fileName;
         console.log('FileName: '+fname);
         const messageData = {
                 document: { source: path.join(__dirname, '../', fname) },
