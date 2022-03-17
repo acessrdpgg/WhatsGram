@@ -427,7 +427,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                 else
                     client.sendMessage(msg.to, pfpMedia, {caption: captionTxt});
             }
-        } else if(config.SELF_LOGS == "true" && !msg.hasMedia && msg.body != '') {
+        } else if(config.SELF_LOGS == "true" && !msg.hasMedia) {
             var chat = await msg.getChat();
             const name = `${chat.isGroup ? `[GROUP] ${chat.name}`
                 : `<a href="https://wa.me/${msg.to.split("@")[0]}?chat_id=${msg.to.split("@")[0]}&message_id=${msg.id.id}"><b>${chat.name}</b></a>`
