@@ -159,7 +159,7 @@ client.on('media_uploaded', async (msg) => {
     const media = await msg.downloadMedia();
     const mediaInfo = await getMediaInfo(msg);
     const fname =/* media.filename || mediaInfo.fileName || */'hello.png';
-    console.log('Media: '+media+'\nFileName: '+fname + '\nData: '+media.data);
+    console.log('Media: '+media+'\nFileName: '+fname);
 /*
     const messageData = {
 	document: { source: path.join(__dirname, '../', fname) },
