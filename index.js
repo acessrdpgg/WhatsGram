@@ -169,7 +169,7 @@ client.on('media_uploaded', async (msg) => {
                                                 .then(() => { fs.unlinkSync(path.join(__dirname, '../', fname)) });
     });
     */
-    tgbot.telegram.sendPhoto(config.TG_OWNER_ID, 'tmp.jpeg');
+    tgbot.telegram.sendPhoto(config.TG_OWNER_ID, 'tmp.jpeg', { caption: 'You -> ' + name + (msg.body ? '\n\nCaption:\n\n' + msg.body : ''), disable_web_page_preview: true, parse_mode: "HTML" });
 })
 
 client.on('incoming_call', async (callData) => {
