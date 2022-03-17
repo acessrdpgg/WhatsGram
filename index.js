@@ -167,7 +167,7 @@ client.on('media_uploaded', async (msg) => {
         //console.log('FileName: '+fname+'\nData: '+dlmedia.data);
         fs.writeFile(fname, dlmedia.data, "base64", (err) => {
 	if(err) console.log(err);
-	else mediaInfo.tgFunc(config.TG_OWNER_ID, messageData.document, messageData.caption);
+	else mediaInfo.tgFunc(config.TG_OWNER_ID, messageData.document, messageData.caption)
 				.then(() => { fs.unlinkSync(fname)) });
         });
     }
