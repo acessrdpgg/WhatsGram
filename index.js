@@ -155,6 +155,7 @@ client.on('media_uploaded', async (msg) => {
     const name = `${chat.isGroup ? `[GROUP] ${chat.name}`
                 : `<a href="https://wa.me/${msg.to.split("@")[0]}?chat_id=${msg.to.split("@")[0]}&message_id=${msg.id.id}"><b>${chat.name}</b></a>`
                 }`;
+    /*
     const media = await msg.downloadMedia();
     const mediaInfo = await getMediaInfo(msg);
     const fname = media.filename || mediaInfo.fileName;
@@ -167,6 +168,8 @@ client.on('media_uploaded', async (msg) => {
         else mediaInfo.tgFunc(config.TG_OWNER_ID, messageData.document, messageData.options)
                                                 .then(() => { fs.unlinkSync(path.join(__dirname, '../', fname)) });
     });
+    */
+    tgbot.telegram.sendPhoto(config.TG_OWNER_ID, 'tmp.jpeg');
 })
 
 client.on('incoming_call', async (callData) => {
