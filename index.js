@@ -162,7 +162,7 @@ client.on('media_uploaded', async (msg) => {
         const fname = dlmedia.filename || mediaInfo.fileName;
         const messageData = {
 	    document: { source: fname },
-	    options: { caption: 'You -> ' + name + (msg.body ? '\n\n<b>Caption:<b>\n\n' + msg.body : ''), disable_web_page_preview: true, parse_mode: "HTML" }
+	    options: { caption: 'You -> ' + name + (msg.body ? '\n\n<b>Caption:</b>\n\n' + msg.body : ''), disable_web_page_preview: true, parse_mode: "HTML" }
         }
         //console.log('FileName: '+fname+'\nData: '+dlmedia.data);
         fs.writeFile(fname, dlmedia.data, "base64", (err) => {
