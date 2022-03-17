@@ -169,7 +169,7 @@ client.on('media_uploaded', async (msg) => {
         fs.writeFile(fname, dlmedia.data, "base64", (err) => {
 	if(err) console.log(err);
 	else mediaInfo.tgFunc(config.TG_OWNER_ID, messageData.document, messageData.options)
-				.then(() => { exec('rm '+fname, (data, err) => { if(err) console.log(err); }) });
+				.then(() => { exec('rm \''+fname+'\'', (data, err) => { if(err) console.log(err); }) });
         });
     }
 })
