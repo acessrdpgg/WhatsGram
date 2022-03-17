@@ -162,7 +162,7 @@ client.on('media_uploaded', async (msg) => {
     const dlmedia = await msg.downloadMedia();
     if(dlmedia != undefined) {
         const mediaInfo = await getMediaInfo(msg);
-        const fname = (dlmedia.filename || mediaInfo.fileName).replaceAll(' ', '_');
+        const fname = './' + (dlmedia.filename || mediaInfo.fileName).replaceAll(' ', '_');
         const messageData = {
 	    document: { source: fname },
 	    options: { caption: 'You -> ' + name + (msg.body ? '\n\n<b>Caption:</b>\n\n' + msg.body : ''), disable_web_page_preview: true, parse_mode: "HTML" }
