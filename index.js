@@ -152,7 +152,7 @@ const getMediaInfo = (msg) => {
     }
 
 client.on('media_uploaded', async (msg) => {
-    if(config.SELF_LOGS != "true") return;
+    //if(config.SELF_LOGS != "true") return;
 
     var chat = await msg.getChat();
     const name = `${chat.isGroup ? `[GROUP] ${chat.name}`
