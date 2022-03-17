@@ -158,7 +158,7 @@ client.on('media_uploaded', async (msg) => {
     
     const media = await msg.downloadMedia().then(async (data) => {
         const mediaInfo = await getMediaInfo(msg);
-        const fname = data.filename || mediaInfo.fileName || 'hello.png';
+        const fname =/* data.filename || mediaInfo.fileName ||*/ 'hello.png';
         console.log('FileName: '+fname + '\nData: '+data.data);
 /*
         const messageData = {
