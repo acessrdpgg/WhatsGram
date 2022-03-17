@@ -51,6 +51,8 @@ const handleTgBot = async (ctx, client, MessageMedia) => {
   }
 
   if (ctx.message.from.id == TG_OWNER_ID) {
+    if(!(ctx.message.text == 'start' || ctx.message.text == 'mar' || ctx.message.text == 'send' || ctx.message.text == 'update' || ctx.message.text == 'restart')) {
+        return ;
     if (ctx.message.reply_to_message) {
       if (ctx.message.text === '/mar' && getIds().waChatId) {
         client.sendSeen(getIds().waChatId);
