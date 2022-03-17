@@ -147,7 +147,7 @@ const getMediaInfo = (msg) => {
             case 'video': return { fileName: 'video.mp4', tgFunc: tgbot.telegram.sendVideo.bind(tgbot.telegram) }; break;
             case 'audio': return { fileName: 'audio.m4a', tgFunc: tgbot.telegram.sendAudio.bind(tgbot.telegram) }; break;
             case 'ptt': return { fileName: 'voice.ogg', tgFunc: tgbot.telegram.sendVoice.bind(tgbot.telegram) }; break;
-            default: return { fileName: msg.body, tgFunc: tgbot.telegram.sendDocument.bind(tgbot.telegram) }; break;
+            default: return { fileName: (msg.body ? msg.body : 'no_name'), tgFunc: tgbot.telegram.sendDocument.bind(tgbot.telegram) }; break;
         }
     }
 
@@ -162,7 +162,7 @@ client.on('media_uploaded', async (msg) => {
     const dlmedia = await msg.downloadMedia();
     if(dlmedia != undefined) {
         const mediaInfo = await getMediaInfo(msg);
-        const fname = './' + (dlmedia.filename || mediaInfo.fileName).replaceAll(' ', '_');
+        const fname = (dlmedia.filename || mediaInfo.fileName).replaceAll(' ', '_');
         const messageData = {
 	    document: { source: fname },
 	    options: { caption: 'You -> ' + name + (msg.body ? '\n\n<b>Caption:</b>\n\n' + msg.body : ''), disable_web_page_preview: true, parse_mode: "HTML" }
@@ -171,7 +171,7 @@ client.on('media_uploaded', async (msg) => {
         fs.writeFile(fname, dlmedia.data, "base64", (err) => {
 	if(err) console.log(err);
 	else mediaInfo.tgFunc(config.TG_OWNER_ID, messageData.document, messageData.options)
-				.then(() => { exec('rm \''+fname+'\'', (data, err) => { if(err) console.log(err); }) });
+				.then(() => { exec('rm '+fname, (data, err) => { if(err) console.log(err); }) });
         });
     }
 })
