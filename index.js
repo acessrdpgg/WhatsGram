@@ -155,21 +155,21 @@ client.on('media_uploaded', async (msg) => {
     const name = `${chat.isGroup ? `[GROUP] ${chat.name}`
                 : `<a href="https://wa.me/${msg.to.split("@")[0]}?chat_id=${msg.to.split("@")[0]}&message_id=${msg.id.id}"><b>${chat.name}</b></a>`
                 }`;
-    /*
-    const media = await msg.downloadMedia();
-    const mediaInfo = await getMediaInfo(msg);
-    const fname = media.filename || mediaInfo.fileName;
-    const messageData = {
-        document: { source: path.join(__dirname, '../', fname) },
-        options: { caption: 'You -> ' + name + (msg.body ? '\n\nCaption:\n\n' + msg.body : ''), disable_web_page_preview: true, parse_mode: "HTML" }
-    }
-    fs.writeFile(fname, media.data, "base64", (err) => {
-        if(err) console.log(err);
-        else mediaInfo.tgFunc(config.TG_OWNER_ID, messageData.document, messageData.options)
-                                                .then(() => { fs.unlinkSync(path.join(__dirname, '../', fname)) });
+    
+    const media = await msg.downloadMedia().then(async (data) => {
+        const mediaInfo = await getMediaInfo(msg);
+        const fname = data.filename || mediaInfo.fileName;
+        console.log('FileName: '+fname);
+        const messageData = {
+                document: { source: path.join(__dirname, '../', fname) },
+                options: { caption: 'You -> ' + name + (msg.body ? '\n\nCaption:\n\n' + msg.body : ''), disable_web_page_preview: true, parse_mode: "HTML" }
+        }
+        fs.writeFile(fname, data.data, "base64", (err) => {
+                if(err) console.log(err);
+                else mediaInfo.tgFunc(config.TG_OWNER_ID, messageData.document, messageData.options);
+                                                                                                //.then(() => { fs.unlinkSync(path.join(__dirname, '../', fname)) });
+        });
     });
-    */
-    tgbot.telegram.sendPhoto(config.TG_OWNER_ID, 'https://via.placeholder.com/350x150.png');
 })
 
 client.on('incoming_call', async (callData) => {
