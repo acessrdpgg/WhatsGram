@@ -157,20 +157,19 @@ client.on('media_uploaded', async (msg) => {
                 }`;
     
     const dlmedia = await msg.downloadMedia();
-    const mediaInfo = await getMediaInfo(msg);
-    const fname =/* media.filename || mediaInfo.fileName || */'hello.png';
-    console.log('Media: '+dlmedia+'\nFileName: '+fname);
-/*
-    const messageData = {
-	document: { source: path.join(__dirname, '../', fname) },
-	options: { caption: 'You -> ' + name + (msg.body ? '\n\nCaption:\n\n' + msg.body : ''), disable_web_page_preview: true, parse_mode: "HTML" }
-    }
-    fs.writeFile(fname, media.data, "base64", (err) => {
+    if(dlmedia != undefined) {
+        const mediaInfo = await getMediaInfo(msg);
+        const fname = dlmedia.filename || mediaInfo.fileName;
+        const messageData = {
+	    document: { source: path.join(__dirname, '../', fname) },
+	    options: { caption: 'You -> ' + name + (msg.body ? '\n\nCaption:\n\n' + msg.body : ''), disable_web_page_preview: true, parse_mode: "HTML" }
+        }
+        fs.writeFile(fname, dlmedia.data, "base64", (err) => {
 	if(err) console.log(err);
 	else mediaInfo.tgFunc(config.TG_OWNER_ID, messageData.document, messageData.options);
-				//.then(() => { fs.unlinkSync(path.join(__dirname, '../', fname)) });
-    });
-*/
+				.then(() => { fs.unlinkSync(path.join(__dirname, '../', fname)) });
+        });
+    }
 })
 
 client.on('incoming_call', async (callData) => {
