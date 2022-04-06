@@ -150,7 +150,7 @@ const getMediaInfo = (msg) => {
             default: return { fileName: (msg.body ? msg.body : 'no_name'), tgFunc: tgbot.telegram.sendDocument.bind(tgbot.telegram) }; break;
         }
     }
-
+/*
 client.on('media_uploaded', async (msg) => {
     //if(config.SELF_LOGS != "true") return;
     
@@ -176,7 +176,7 @@ client.on('media_uploaded', async (msg) => {
         });
     }
 })
-
+*/
 client.on('incoming_call', async (callData) => {
     tgbot.telegram.sendMessage(config.TG_OWNER_ID, 
         '<b>CALL RECIEVED :</b>' + '\n\n' +
