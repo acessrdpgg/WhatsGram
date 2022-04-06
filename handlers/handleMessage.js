@@ -17,6 +17,11 @@ const handleMessage = async (message, TG_OWNER_ID, tgbot, client) => {
 
     const chat = await message.getChat();
     const contact = await message.getContact();
+
+    while(chat === null) {
+        
+    }
+
     let name = contact.name || contact.pushname;
 
     if (message.author == undefined && config.pmguard_enabled == "true") { // Pm check for pmpermit module
