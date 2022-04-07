@@ -56,7 +56,8 @@ const handleMessage = async (message, TG_OWNER_ID, tgbot, client) => {
             fs.writeFile(mediaInfo.fileName, data.data, "base64", (err) =>
                 err ? console.error(err)
                     : mediaInfo.tgFunc(TG_OWNER_ID, messageData.document, messageData.options)
-                        .then(() => { exec('rm '+path.join(__dirname, '../', mediaInfo.fileName)), (data, err) { if(err) console.log(err); }) })
+                        .then(() => { exec('rm '+path.join(__dirname, '../', mediaInfo.fileName), (data, err) => 
+                                          { if(err) console.log(err); }) })
             );
         });
     } else if (!message.from.includes("status") && !chat.isMuted) {
