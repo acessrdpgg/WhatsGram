@@ -3,7 +3,7 @@ const qrcode = require("qrcode-terminal");
 const fs = require("fs");
 require("dotenv").config();
 var QRCode = require("qrcode");
-const {Client , MessageMedia} = require("whatsapp-web.js");
+const {Client , LocalAuth} = require("whatsapp-web.js");
 const { Telegraf } = require("telegraf");
 const config = require("./config");
 const alive = require('./modules/alive');
@@ -38,10 +38,19 @@ if (process.env.SESSION_DATA) {
 const cmd = (cmd, desc) => ({command: cmd, description: desc});
 tgbot.telegram.setMyCommands([cmd('start', 'Start bot.'), cmd('mar', 'Mark message as read.'), cmd('send', 'Ex: /send ph_no message'), cmd('update', 'Update UB.'), cmd('restart', 'Restart ub.')]);
 
-const client = new Client({ // Create client.
-  session: sessionData,
-  puppeteer: { headless: true, args: ["--no-sandbox"] },
+const  client = new Client({
+  puppeteer: {
+    executablePath: '/usr/bin/brave-browser-stable',
+  },
+  authStrategy: new LocalAuth({
+    clientId: "client-one"
+  }),
+  puppeteer: {
+    headless: false,
+  }
 });
+
+client.initialize();
 
 async function generateQr() {
   client.on("qr", async (qr) => {
