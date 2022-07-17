@@ -3,7 +3,7 @@ const qrcode = require("qrcode-terminal");
 const fs = require("fs");
 require("dotenv").config();
 var QRCode = require("qrcode");
-const {Client , LocalAuth} = require("whatsapp-web.js");
+const {Client , LocalAuth, MessageMedia} = require("whatsapp-web.js");
 const { Telegraf } = require("telegraf");
 const config = require("./config");
 const alive = require('./modules/alive');
@@ -49,8 +49,6 @@ const  client = new Client({
     headless: false,
   }
 });
-
-client.initialize();
 
 async function generateQr() {
   client.on("qr", async (qr) => {
