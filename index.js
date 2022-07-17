@@ -3,7 +3,7 @@ const qrcode = require("qrcode-terminal");
 const fs = require("fs");
 require("dotenv").config();
 var QRCode = require("qrcode");
-const { Client, LocalAuth } = require('whatsapp-web.js');
+const { Client, NoAuth } = require('whatsapp-web.js');
 const { Telegraf } = require("telegraf");
 const config = require("./config");
 const alive = require('./modules/alive');
@@ -38,10 +38,7 @@ if (process.env.SESSION_DATA) {
 const cmd = (cmd, desc) => ({command: cmd, description: desc});
 tgbot.telegram.setMyCommands([cmd('start', 'Start bot.'), cmd('mar', 'Mark message as read.'), cmd('send', 'Ex: /send ph_no message'), cmd('update', 'Update UB.'), cmd('restart', 'Restart ub.')]);
 
-const client = new Client({
-    authStrategy: new LocalAuth({ clientId: "client-one" })
-});
-
+const client = new Client();
 
 async function generateQr() {
   client.on("qr", async (qr) => {
