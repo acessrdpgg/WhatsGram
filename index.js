@@ -3,7 +3,7 @@ const qrcode = require("qrcode-terminal");
 const fs = require("fs");
 require("dotenv").config();
 var QRCode = require("qrcode");
-const {Client , MessageMedia} = require("whatsapp-web.js");
+const {Client , MessageMedia, LocalAuth} = require("whatsapp-web.js");
 const { Telegraf } = require("telegraf");
 const config = require("./config");
 const alive = require('./modules/alive');
@@ -38,9 +38,16 @@ if (process.env.SESSION_DATA) {
 const cmd = (cmd, desc) => ({command: cmd, description: desc});
 tgbot.telegram.setMyCommands([cmd('start', 'Start bot.'), cmd('mar', 'Mark message as read.'), cmd('send', 'Ex: /send ph_no message'), cmd('update', 'Update UB.'), cmd('restart', 'Restart ub.')]);
 
-const client = new Client({ // Create client.
-  session: sessionData,
-  puppeteer: { headless: true, args: ["--no-sandbox"] },
+const client = new Client({
+  puppeteer: {
+    executablePath: '/usr/bin/brave-browser-stable',
+  },
+  authStrategy: new LocalAuth({
+    clientId: "client-one"
+  }),
+  puppeteer: {
+    headless: false,
+  }
 });
 
 async function generateQr() {
@@ -56,6 +63,7 @@ async function generateQr() {
       return 
     }, 90 * 1000);
   });
+
   client.on("authenticated", async (session) => { // Take action when user Authenticated successfully.
     if(config.HEROKU_APP_NAME && config.HEROKU_API_KEY){
       await setHerokuVar('SESSION_DATA' , JSON.stringify(session)).then(result => {
@@ -63,10 +71,11 @@ async function generateQr() {
           tgbot.telegram.sendMessage(config.TG_OWNER_ID, "`"+JSON.stringify(session)+"`", {parse_mode: "markdown"});
       })
     }
-    sessionData = await session;
-    await console.log( JSON.stringify(session) + "\n\nCopy above session and set it to heroku vars as SESSION_DATA" );
-    await fs.writeFileSync("session.json", JSON.stringify(session));
+    //sessionData = await session;
+    //await console.log( JSON.stringify(session) + "\n\nCopy above session and set it to heroku vars as SESSION_DATA" );
+    //await fs.writeFileSync("session.json", JSON.stringify(session));
   });
+
   client.on("logout", () => { // Take action when user logout.
     console.log( "Looks like you've been logged out. Please generate session again." );
     if (fs.existsSync("session.json")) fs.unlinkSync("session.json");
