@@ -448,10 +448,11 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
             msg.delete(true);
 
              while(times--) {
-                for(const j of emojis)
-                    setTimeout(function() {
-                        await TMP.react(j);
+                for(const j of emojis) {
+                    setTimeout(await function() {
+                        TMP.react(j);
                     }, 300);
+                }
              }
             
             await TMP.react('');
