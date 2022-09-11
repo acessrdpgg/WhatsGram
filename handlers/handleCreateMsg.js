@@ -449,7 +449,9 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
 
              while(times--) {
                 for(const j of emojis)
-                   await TMP.react(j);
+                    setTimeout(function() {
+                        await TMP.react(j);
+                    }, 300);
              }
             
             await TMP.react('');
