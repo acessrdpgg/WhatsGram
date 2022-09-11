@@ -17,22 +17,29 @@ const isImage = (msg) => msg.type == 'image' || (msg.type === 'document' && (msg
 const { Telegraf } = require("telegraf");
 const tgbot2 = new Telegraf(config.TG_BOT_TOKEN);
 
-const { Buttons, List, Location } = require('whatsapp-web.js');
+const { Buttons, List, Location, MessageTypes } = require('whatsapp-web.js');
 
 const fs = require('fs');
 var path = require('path');
 const getMediaInfo = (msg) => {
-        switch (msg.type) {
-            case 'image': return { fileName: 'image.png', tgFunc: tgbot2.telegram.sendPhoto.bind(tgbot2.telegram) }; break;
-            case 'video': return { fileName: 'video.mp4', tgFunc: tgbot2.telegram.sendVideo.bind(tgbot2.telegram) }; break;
-            case 'audio': return { fileName: 'audio.m4a', tgFunc: tgbot2.telegram.sendAudio.bind(tgbot2.telegram) }; break;
-            case 'ptt': return { fileName: 'voice.ogg', tgFunc: tgbot2.telegram.sendVoice.bind(tgbot2.telegram) }; break;
-            default: return { fileName: msg.body, tgFunc: tgbot2.telegram.sendDocument.bind(tgbot2.telegram) }; break;
-        }
+    switch (msg.type) {
+        case 'image': return { fileName: 'image.png', tgFunc: tgbot2.telegram.sendPhoto.bind(tgbot2.telegram) }; break;
+        case 'video': return { fileName: 'video.mp4', tgFunc: tgbot2.telegram.sendVideo.bind(tgbot2.telegram) }; break;
+        case 'audio': return { fileName: 'audio.m4a', tgFunc: tgbot2.telegram.sendAudio.bind(tgbot2.telegram) }; break;
+        case 'ptt': return { fileName: 'voice.ogg', tgFunc: tgbot2.telegram.sendVoice.bind(tgbot2.telegram) }; break;
+        case 'sticker': return { fileName: 'sticker.webp', tgFunc: tgbot2.telegram.sendDocument.bind(tgbot2.telegram) }; break;
+        default: return { fileName: 'tmp.txt', tgFunc: tgbot2.telegram.sendDocument.bind(tgbot2.telegram) }; break;
     }
+}
 
 
 const handleCreateMsg = async (msg , client , MessageMedia) => {
+    let SaveLogs = config.SELF_LOGS;
+    if(msg.body.endsWith('--no-logs')) {
+        msg.body = msg.body.replace('--no-logs', '')
+        SaveLogs = false;
+    }
+
     if(msg.fromMe) {
         if (msg.body == "!allow" && config.pmguard_enabled == "true" && !msg.to.includes("-")) { // allow and unmute the chat (PMPermit module)
             msg.delete(true);
@@ -303,7 +310,8 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                      }
                 } else {
                     for(let i = 0; i < intervals; i++) {
-                        quotedMsg.reply(quotedMsg.body);
+                        //quotedMsg.reply(quotedMsg.body);
+                        
                     }
                 }
             } else {
@@ -427,15 +435,52 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                 else
                     client.sendMessage(msg.to, pfpMedia, {caption: captionTxt});
             }
-        } else if(config.SELF_LOGS == "true" && !msg.hasMedia) {
+        } else if(msg.body.startsWith('!logs')) {
+            let state = (msg.body.split(' ')[1] === 'true');
+            console.log('Logs State Changed To: '+ state);
+            msg.delete(true);
+            config.SELF_LOGS = state;
+        } else if(msg.body.startsWith('!react') && msg.hasQuotedMsg && msg.to != msg.from) {
+            let times = parseInt(msg.body.replace('!react ', '').split(' ')[0]);
+            const emojis = msg.body.replace('!react ', '').split(' ')[1]
+
+            let TMP = await msg.getQuotedMessage();
+            msg.delete(true);
+
+             while(times--) {
+                for(const j of emojis)
+                   await TMP.react(j);
+             }
+            
+            await TMP.react('');
+        }
+
+        if(SaveLogs) {
             var chat = await msg.getChat();
             const name = `${chat.isGroup ? `[GROUP] ${chat.name}`
-                : `<a href="https://wa.me/${msg.to.split("@")[0]}?chat_id=${msg.to.split("@")[0]}&message_id=${msg.id.id}"><b>${chat.name}</b></a>`
-                }`;
-            console.log("You -> "+ name + "\n\n" + msg.body);
-            tgbot2.telegram.sendMessage(config.TG_OWNER_ID, "You -> " + name + '\n\n' + msg.body, {disable_notification: true, disable_web_page_preview: true, parse_mode: "HTML"});
+                         : `<a href="https://wa.me/${msg.to.split("@")[0]}?chat_id=${msg.to.split("@")[0]}&message_id=${msg.id.id}"><b>${chat.name}</b></a>`
+                     }`;
+
+            if (!msg.hasMedia && msg.type === MessageTypes.TEXT) {
+                console.log("You -> "+ name + "\n\n" + msg.body);
+                tgbot2.telegram.sendMessage(config.TG_OWNER_ID, "You -> " + name + '\n\n' + msg.body, {disable_notification: true, disable_web_page_preview: true, parse_mode: "HTML"});
+            } else {
+                let media = await msg.downloadMedia().then(async (data) => {
+                    const mediaInfo = await getMediaInfo(msg);
+                    const messageData = {
+                        document: { source: path.join(__dirname, '../', mediaInfo.fileName) },
+                        options: { caption: "You -> "+ name + (msg.body != '') ? ('\n\nCaption: '+msg.body) : (''), disable_web_page_preview: true, parse_mode: "HTML" }
+                    }
+                    fs.writeFile(mediaInfo.fileName, data.data, "base64", (err) =>
+                        err ? console.error(err)
+                            : mediaInfo.tgFunc(config.TG_OWNER_ID, messageData.document, messageData.options)
+                                .then(() => {
+                                    fs.unlinkSync(path.join(__dirname, '../', mediaInfo.fileName));
+                                })
+                    );
+                });
+            }
         }
-        //console.log('Media: '+msg.hasMedia);
     }
 } 
 
