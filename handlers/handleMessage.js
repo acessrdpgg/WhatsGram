@@ -12,7 +12,8 @@ const handleMessage = async (message, TG_OWNER_ID, tgbot, client) => {
             case 'video': return { fileName: 'video.mp4', tgFunc: tgbot.telegram.sendVideo.bind(tgbot.telegram) }; break;
             case 'audio': return { fileName: 'audio.m4a', tgFunc: tgbot.telegram.sendAudio.bind(tgbot.telegram) }; break;
             case 'ptt': return { fileName: 'voice.ogg', tgFunc: tgbot.telegram.sendVoice.bind(tgbot.telegram) }; break;
-            default: return { fileName: msg.body, tgFunc: tgbot.telegram.sendDocument.bind(tgbot.telegram) }; break;
+            case 'sticker': return { fileName: 'sticker.webp', tgFunc: tgbot.telegram.sendDocument.bind(tgbot.telegram) }; break;
+            default: return { fileName: 'tmp.txt', tgFunc: tgbot.telegram.sendDocument.bind(tgbot.telegram) }; break;
         }
     }
 
