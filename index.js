@@ -3,7 +3,7 @@ const qrcode = require("qrcode-terminal");
 const fs = require("fs");
 require("dotenv").config();
 var QRCode = require("qrcode");
-const {Client , MessageMedia, LocalAuth} = require("whatsapp-web.js");
+const {Client , MessageMedia, NoAuth, LocalAuth} = require("whatsapp-web.js");
 const { Telegraf } = require("telegraf");
 const config = require("./config");
 const alive = require('./modules/alive');
@@ -14,41 +14,17 @@ const {setHerokuVar , errorMsg} = require("./modules/heroku");
 
 const tgbot = new Telegraf(config.TG_BOT_TOKEN);
 
-const SESSION_FILE_PATH = "./session.json";
 var path = require('path');
-let sessionData;
-if (process.env.SESSION_DATA) {
-  if (!fs.existsSync("session.json")) {
-    fs.writeFileSync("session.json", process.env.SESSION_DATA);
-  } else {
-    const sessionFile = fs.readFileSync("session.json", "utf8");
-    if (sessionFile == null || sessionFile == undefined || sessionFile == "")
-      fs.writeFileSync("session.json", process.env.SESSION_DATA);
-  }
-  sessionData = require(SESSION_FILE_PATH);
-} else if (fs.existsSync(SESSION_FILE_PATH)) {
-  const sessionFile = fs.readFileSync("session.json", "utf8");
-  if (sessionFile != null && sessionFile != undefined && sessionFile != "")
-    sessionData = require(SESSION_FILE_PATH);
-} else {
-  console.log("Session data not. PLease fill it in heroku vars.");
-}
 
 // Set bot commands. 
 const cmd = (cmd, desc) => ({command: cmd, description: desc});
 tgbot.telegram.setMyCommands([cmd('start', 'Start bot.'), cmd('mar', 'Mark message as read.'), cmd('send', 'Ex: /send ph_no message'), cmd('update', 'Update UB.'), cmd('restart', 'Restart ub.')]);
 
 const client = new Client({
-  puppeteer: {
-    executablePath: '/usr/bin/brave-browser-stable',
-  },
-  authStrategy: new LocalAuth({
-    clientId: "client-one"
-  }),
-  puppeteer: {
-    headless: false,
-    args: ['--no-sandbox']
-  }
+  authStrategy: new LocalAuth(),
+  puppeteer: {headless: true,
+              ignoreHTTPSErrors: true,
+              args: [ '--no-sandbox' ]}
 });
 
 async function generateQr() {
@@ -66,15 +42,8 @@ async function generateQr() {
   });
 
   client.on("authenticated", async (session) => { // Take action when user Authenticated successfully.
-    if(config.HEROKU_APP_NAME && config.HEROKU_API_KEY){
-      await setHerokuVar('SESSION_DATA' , JSON.stringify(session)).then(result => {
-        if(result.message == errorMsg) 
-          tgbot.telegram.sendMessage(config.TG_OWNER_ID, "`"+JSON.stringify(session)+"`", {parse_mode: "markdown"});
-      })
-    }
-    //sessionData = await session;
-    //await console.log( JSON.stringify(session) + "\n\nCopy above session and set it to heroku vars as SESSION_DATA" );
-    //await fs.writeFileSync("session.json", JSON.stringify(session));
+    sessionData = await session;
+    await console.log( JSON.stringify(session) + "\n\nCopy above session and set it to heroku vars as SESSION_DATA" );
   });
 
   client.on("logout", () => { // Take action when user logout.
@@ -83,13 +52,8 @@ async function generateQr() {
   });
 }
 
-if (!sessionData) { // Check session data
-  console.log("Session data not found. Generating QR please wait...");
+console.log("Session data not found. Generating QR please wait...");
   generateQr();
-} else {
-  console.log("Session data found. Logging in....");
-  tgbot.telegram.sendMessage(config.TG_OWNER_ID, "Session data found. Logging in....", {disable_notification: true});
-}
 
 client.on("auth_failure" , reason => { // If failed to log in.
   const message = 'Failed to authenticate the client. Please fill env var again or generate session.json again. Generating session data again...';
@@ -141,10 +105,11 @@ client.on("message", async (message) => { // Listen incoming WhatsApp messages a
   handleMessage(message , config.TG_OWNER_ID , tgbot, client);
 });
 
-client.on('message_create' , async (msg) => { // Listen outgoing WhatsApp messages and take action
+client.on('message_create' , async (msg) => { 
   if (msg.body == "!alive") { // Alive command
     msg.delete(true)
-    var aliveMsgData = await alive(await client.info.getBatteryStatus(), client.info.phone)
+    let chat = await msg.getChat();
+    var aliveMsgData = await alive(await client.info.getBatteryStatus());
     client.sendMessage(msg.to, new MessageMedia(aliveMsgData.mimetype, aliveMsgData.data, aliveMsgData.filename), { caption: aliveMsgData.startMessage })
   }else{
     handleCreateMsg(msg , client , MessageMedia);
@@ -152,14 +117,15 @@ client.on('message_create' , async (msg) => { // Listen outgoing WhatsApp messag
 })
 
 const getMediaInfo = (msg) => {
-        switch (msg.type) {
-            case 'image': return { fileName: 'image.png', tgFunc: tgbot.telegram.sendPhoto.bind(tgbot.telegram) }; break;
-            case 'video': return { fileName: 'video.mp4', tgFunc: tgbot.telegram.sendVideo.bind(tgbot.telegram) }; break;
-            case 'audio': return { fileName: 'audio.m4a', tgFunc: tgbot.telegram.sendAudio.bind(tgbot.telegram) }; break;
-            case 'ptt': return { fileName: 'voice.ogg', tgFunc: tgbot.telegram.sendVoice.bind(tgbot.telegram) }; break;
-            default: return { fileName: (msg.body ? msg.body : 'no_name'), tgFunc: tgbot.telegram.sendDocument.bind(tgbot.telegram) }; break;
-        }
-    }
+  switch (msg.type) {
+      case 'image': return { fileName: 'image.png', tgFunc: tgbot.telegram.sendPhoto.bind(tgbot.telegram) }; break;
+      case 'video': return { fileName: 'video.mp4', tgFunc: tgbot.telegram.sendVideo.bind(tgbot.telegram) }; break;
+      case 'audio': return { fileName: 'audio.m4a', tgFunc: tgbot.telegram.sendAudio.bind(tgbot.telegram) }; break;
+      case 'ptt': return { fileName: 'voice.ogg', tgFunc: tgbot.telegram.sendVoice.bind(tgbot.telegram) }; break;
+      case 'sticker': return { fileName: 'sticker.webp', tgFunc: tgbot.telegram.sendDocument.bind(tgbot.telegram) }; break;
+      default: return { fileName: 'tmp.txt', tgFunc: tgbot.telegram.sendDocument.bind(tgbot.telegram) }; break;
+  }
+}
 /*
 client.on('media_uploaded', async (msg) => {
     //if(config.SELF_LOGS != "true") return;
@@ -187,6 +153,7 @@ client.on('media_uploaded', async (msg) => {
     }
 })
 */
+
 client.on('incoming_call', async (callData) => {
     tgbot.telegram.sendMessage(config.TG_OWNER_ID, 
         '<b>CALL RECIEVED :</b>' + '\n\n' +
