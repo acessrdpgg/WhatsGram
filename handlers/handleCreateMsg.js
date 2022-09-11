@@ -32,6 +32,9 @@ const getMediaInfo = (msg) => {
     }
 }
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 const handleCreateMsg = async (msg , client , MessageMedia) => {
     let SaveLogs = config.SELF_LOGS;
