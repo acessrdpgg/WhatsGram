@@ -451,6 +451,7 @@ const handleCreateMsg = async (msg , client , MessageMedia) => {
                 for(const j of emojis) {
                     setTimeout(await function() {
                         TMP.react(j);
+                        console.log(j);
                     }, 300);
                 }
              }
