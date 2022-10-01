@@ -4,7 +4,7 @@
   "description": "WhatsApp userbot with Telegram bot integration.",
   "main": "index.js",
   "scripts": {
-    "start": "node startSession.js"
+    "start": "node startProcess.js"
   },
   "keywords": [
     "WhatsApp",
