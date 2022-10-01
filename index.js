@@ -6,7 +6,7 @@ const qrcode = require("qrcode-terminal");
 const fs = require("fs");
 require("dotenv").config();
 var QRCode = require("qrcode");
-const {Client , MessageMedia, NoAuth, LocalAuth} = require("whatsapp-web.js");
+const {Client , MessageMedia, NoAuth, LocalAuth, } = require("whatsapp-web.js");
 const { Telegraf } = require("telegraf");
 const config = require("./config");
 const alive = require('./modules/alive');
@@ -108,13 +108,13 @@ client.on("message", async (message) => { // Listen incoming WhatsApp messages a
 
 client.on('message_create' , async (msg) => { 
   if (msg.body == "!alive") { // Alive command
-    msg.delete(true)
-    let chat = await msg.getChat();
-    var aliveMsgData = await alive(await client.info.getBatteryStatus());
+    msg.delete(true, client)
+    
+    var aliveMsgData = await alive(await client.info.getBatteryStatus(), client);
     client.sendMessage(msg.to, new MessageMedia(aliveMsgData.mimetype, aliveMsgData.data, aliveMsgData.filename), { caption: aliveMsgData.startMessage })
   } else {
     try {
-	handleCreateMsg(msg, client , MessageMedia);
+	    await handleCreateMsg(msg, client);
     } catch (error) {
         console.log(error);
     }
