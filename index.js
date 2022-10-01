@@ -113,12 +113,10 @@ client.on('message_create' , async (msg) => {
     var aliveMsgData = await alive(await client.info.getBatteryStatus());
     client.sendMessage(msg.to, new MessageMedia(aliveMsgData.mimetype, aliveMsgData.data, aliveMsgData.filename), { caption: aliveMsgData.startMessage })
   } else {
-    if(msg.body.startsWith("!")) {
-	try {
-	    handleCreateMsg(msg, client , MessageMedia);
-	} catch (error) {
-            console.log(error);
-        }
+    try {
+	handleCreateMsg(msg, client , MessageMedia);
+    } catch (error) {
+        console.log(error);
     }
   }
 })
