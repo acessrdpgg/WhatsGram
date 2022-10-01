@@ -1,3 +1,6 @@
+const express = require("express");
+const app = express();
+
 const {exec} = require('child_process');
 const qrcode = require("qrcode-terminal");
 const fs = require("fs");
@@ -172,3 +175,20 @@ client.on("disconnect", (issue) => {
 
 tgbot.launch(); // Initialize Telegram Bot
 client.initialize(); // Initialize WhatsApp Client
+
+
+app.get("/", (req, res) => {
+  res.send(
+    '<h1>This server is powered by Whatsbot<br><a href="https://github.com/tuhinpal/WhatsBot">https://github.com/tuhinpal/WhatsBot</a></h1>'
+  );
+});
+
+app.use(
+  "/public",
+  express.static("public"),
+  require("serve-index")("public", { icons: true })
+); // public directory will be publicly available
+
+app.listen(process.env.PORT || 8080, () => {
+  console.log(`Server listening at Port: ${process.env.PORT || 8080}`);
+});
