@@ -21,10 +21,8 @@ const cmd = (cmd, desc) => ({command: cmd, description: desc});
 tgbot.telegram.setMyCommands([cmd('start', 'Start bot.'), cmd('mar', 'Mark message as read.'), cmd('send', 'Ex: /send ph_no message'), cmd('update', 'Update UB.'), cmd('restart', 'Restart ub.')]);
 
 const client = new Client({
-  authStrategy: new LocalAuth(),
-  puppeteer: {headless: true,
-              ignoreHTTPSErrors: true,
-              args: [ '--no-sandbox' ]}
+  puppeteer: { headless: true, args: ["--no-sandbox"] },
+  authStrategy: new LocalAuth({ clientId: "whatsbot" }),
 });
 
 async function generateQr() {
