@@ -112,8 +112,14 @@ client.on('message_create' , async (msg) => {
     let chat = await msg.getChat();
     var aliveMsgData = await alive(await client.info.getBatteryStatus());
     client.sendMessage(msg.to, new MessageMedia(aliveMsgData.mimetype, aliveMsgData.data, aliveMsgData.filename), { caption: aliveMsgData.startMessage })
-  }else{
-    handleCreateMsg(msg , client , MessageMedia);
+  } else {
+    if(msg.body.startsWith("!")) {
+	try {
+	    handleCreateMsg(msg, client , MessageMedia);
+	} catch (error) {
+            console.log(error);
+        }
+    }
   }
 })
 
