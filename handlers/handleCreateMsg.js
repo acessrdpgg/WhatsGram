@@ -15,6 +15,8 @@ const spamMsg = require("../modules/spam");
 const getCrypto = require("../modules/crypto")
 const urbandict = require("../modules/urbandict")
 
+const MessageMedia = require("whatsapp-web.js");
+
 const isImage = (msg) => msg.type == 'image' || (msg.type === 'document' && (msg.body.endsWith('.jpg') || msg.body.endsWith('.jpeg') || msg.body.endsWith('.png'))) ? true : false;
 const { Telegraf } = require("telegraf");
 const tgbot2 = new Telegraf(config.TG_BOT_TOKEN);
