@@ -223,16 +223,6 @@ const handleCreateMsg = async (msg, client) => {
                 const message = `*${result.message}*`;
                 client.sendMessage(msg.to, message);
             })
-        } else if (msg.body === '!sticker' && msg.hasQuotedMsg) {
-            msg.delete(true);
-            const quotedMessage = await msg.getQuotedMessage();
-            if (quotedMessage.hasMedia && isImage(quotedMessage)) {
-                const stickerData = await quotedMessage.downloadMedia();
-                const sticker = await new MessageMedia(stickerData.mimetype, stickerData.data);
-                quotedMessage.reply(sticker, null, { sendMediaAsSticker: true, stickerAuthor: 'AvinAsh\'s Userbot' });
-            } else {
-                quotedMessage.reply('Reply to an image to get it converted into sticker!');
-            }
         } else if (msg.body.startsWith('!setvar ')) {
             msg.delete(true);
             const extractData = (a, b) => msg.body.split(a)[1].split(b)[0].trim();
